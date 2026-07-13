@@ -893,7 +893,163 @@ button:active{transform:translateY(1px);filter:brightness(.98)}
   .character-btn{min-height:98px}
 }
 
-  </style>
+  
+/* =========================================================
+   Secret Garden v8.1 — Lace & petals refinement
+   ========================================================= */
+
+/* Remove the former oversized blurred decorations. */
+body:before,
+body:after{
+  content:none !important;
+}
+
+/* Quiet lace at the page corners. */
+.shell:before,
+.shell:after{
+  content:"";
+  position:fixed;
+  z-index:0;
+  pointer-events:none;
+  width:150px;
+  height:150px;
+  opacity:.18;
+  background:
+    radial-gradient(circle at 18% 18%, transparent 0 34px, rgba(171,105,132,.28) 35px 36px, transparent 37px),
+    repeating-radial-gradient(circle at 18% 18%, transparent 0 11px, rgba(171,105,132,.18) 12px 13px);
+  border-radius:50%;
+}
+.shell:before{
+  left:-64px;
+  top:92px;
+}
+.shell:after{
+  right:-70px;
+  bottom:95px;
+  transform:rotate(180deg);
+}
+
+/* A few restrained rose petals, kept away from text. */
+.hero{
+  isolation:isolate;
+}
+.hero .hero-note:before,
+.hero .hero-note:after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  width:18px;
+  height:12px;
+  border-radius:70% 30% 65% 35%;
+  background:linear-gradient(145deg,rgba(224,155,181,.40),rgba(245,203,218,.15));
+  filter:blur(.2px);
+  opacity:.65;
+}
+.hero .hero-note:before{
+  left:12%;
+  bottom:18px;
+  transform:rotate(-22deg);
+}
+.hero .hero-note:after{
+  right:13%;
+  top:26px;
+  transform:rotate(28deg);
+}
+
+.card{
+  isolation:isolate;
+}
+.card .section-lead:after{
+  content:"";
+  position:absolute;
+  right:31px;
+  top:31px;
+  width:14px;
+  height:9px;
+  border-radius:70% 30% 65% 35%;
+  background:linear-gradient(145deg,rgba(222,151,178,.32),rgba(246,208,221,.12));
+  transform:rotate(31deg);
+  pointer-events:none;
+}
+
+/* Fix oversized date/month controls on iPhone. */
+input[type="date"],
+input[type="month"]{
+  display:block;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  min-height:48px !important;
+  height:48px;
+  padding:8px 12px !important;
+  font-size:18px !important;
+  line-height:1.15;
+  overflow:hidden;
+  border-radius:16px !important;
+  text-align:center;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+/* Keep the native picker indicator within the field instead of pushing width. */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator{
+  margin:0;
+  padding:0;
+  width:20px;
+  height:20px;
+  opacity:.58;
+}
+
+/* Prevent any form child from escaping its card. */
+.card form,
+.card .row,
+.card .date-row,
+.card .month-row,
+.card .actions,
+.reader-card{
+  min-width:0;
+}
+.card input,
+.card textarea,
+.card select,
+.reader-card input,
+.reader-card textarea{
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+@media(max-width:760px){
+  .shell:before{
+    width:118px;
+    height:118px;
+    left:-52px;
+    top:118px;
+    opacity:.15;
+  }
+  .shell:after{
+    width:126px;
+    height:126px;
+    right:-56px;
+    bottom:118px;
+    opacity:.16;
+  }
+
+  input[type="date"],
+  input[type="month"]{
+    height:46px;
+    min-height:46px !important;
+    font-size:17px !important;
+    padding:7px 10px !important;
+  }
+
+  /* Slightly tighter form spacing on narrow screens. */
+  .card label{
+    margin-bottom:7px;
+  }
+}
+
+</style>
 </head>
 <body>
 <section id="gate" class="gate">

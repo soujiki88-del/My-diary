@@ -79,6 +79,14 @@
     .importbox{min-height:220px}
     .status{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.6}
 
+
+    .reader-card{background:rgba(255,253,253,.96);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:20px}
+    .reader-date{font-size:28px;font-weight:700;color:var(--deep);margin-bottom:8px}
+    .reader-meta{color:var(--muted);font-size:14px;margin-bottom:10px}
+    .reader-tags{color:var(--deep);font-size:14px;margin-bottom:14px}
+    .reader-text{white-space:pre-wrap;line-height:1.9;font-size:17px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}
+    .reader-empty{text-align:center;color:var(--muted);padding:36px 10px}
+
     .mergebox,.splitbox{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff}
     .merge-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
     .merge-item{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}
@@ -164,6 +172,17 @@
     </div>
   </section>
 
+
+
+  <section id="tab-reader" class="hidden">
+    <div class="reader-card">
+      <div id="readerContent"></div>
+      <div class="actions">
+        <button id="readerBackBtn" class="secondary">カレンダーへ戻る</button>
+        <button id="readerEditBtn" class="primary">編集する</button>
+      </div>
+    </div>
+  </section>
 
   <section id="tab-manage" class="hidden">
     <div class="card">
@@ -434,8 +453,44 @@ function renderCalendar(){
   const entries=loadEntries(),byDate=new Map(entries.map(e=>[e.date,e]));
   const heads=["日","月","火","水","木","金","土"];$("calendar").innerHTML=heads.map(h=>`<div class="cal-head">${h}</div>`).join("");
   for(let i=0;i<start;i++)$("calendar").insertAdjacentHTML("beforeend",'<div class="cal-day empty"></div>');
-  for(let d=1;d<=last.getDate();d++){const ds=`${month}-${String(d).padStart(2,"0")}`,e=byDate.get(ds);const b=document.createElement("button");b.className="cal-day"+(e?" has":"");b.textContent=d;if(e)b.onclick=()=>editEntry(e.id);$("calendar").appendChild(b)}
+  for(let d=1;d<=last.getDate();d++){const ds=`${month}-${String(d).padStart(2,"0")}`,e=byDate.get(ds);const b=document.createElement("button");b.className="cal-day"+(e?" has":"");b.textContent=d;if(e)b.onclick=()=>openReader(ds);$("calendar").appendChild(b)}
 }
+
+
+let currentReaderDate="";
+function openReader(date){
+  currentReaderDate=date;
+  const entries=loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt);
+  const box=$("readerContent");
+  if(!entries.length){
+    box.innerHTML=`<div class="reader-empty">この日の日記はありません。</div>`;
+    $("readerEditBtn").classList.add("hidden");
+  }else{
+    $("readerEditBtn").classList.remove("hidden");
+    const ratingValue=Math.max(...entries.map(e=>Number(e.rating)||3));
+    const moodValue=entries.map(e=>e.mood).find(m=>m&&m!=="普通")||entries[0].mood||"普通";
+    const checks=[...new Set(entries.flatMap(e=>e.checks||[]))];
+    const body=entries.map(e=>escapeHtml(e.text)).join("<br><br>");
+    box.innerHTML=`
+      <div class="reader-date">${escapeHtml(date)}</div>
+      <div class="reader-meta">${"★".repeat(ratingValue)}${"☆".repeat(5-ratingValue)} ・ ${escapeHtml(moodValue)}</div>
+      ${checks.length?`<div class="reader-tags">${escapeHtml(checks.join("・"))}</div>`:""}
+      <div class="reader-text">${body}</div>
+    `;
+  }
+  switchTab("reader");
+}
+$("readerBackBtn").onclick=()=>switchTab("calendar");
+$("readerEditBtn").onclick=()=>{
+  const entries=loadEntries().filter(e=>e.date===currentReaderDate).sort((a,b)=>a.updatedAt-b.updatedAt);
+  if(entries.length===1){
+    editEntry(entries[0].id);
+  }else if(entries.length>1){
+    switchTab("manage");
+    $("mergeDate").value=currentReaderDate;
+    loadMergeCandidates();
+  }
+};
 
 function populateSplitSelect(){
   const entries=loadEntries();
@@ -519,7 +574,11 @@ $("mergeBtn").onclick=mergeSelected;
 $("loadSplitBtn").onclick=loadSplitEntry;
 $("splitBtn").onclick=splitEntry;
 
-function switchTab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));["write","calendar","import","manage"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
+function switchTab(name){
+  document.querySelectorAll(".tab").forEach(b=>{
+    const activeName=name==="reader"?"calendar":name;
+    b.classList.toggle("active",b.dataset.tab===activeName);
+  });["write","calendar","import","manage","reader"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 
 $("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;

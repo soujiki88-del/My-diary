@@ -135,6 +135,87 @@
     .split-preview{white-space:pre-wrap;line-height:1.6;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
     .warning{color:#a54f68}
 
+
+    .character-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .character-btn{
+      position:relative;text-align:left;min-height:92px;padding:14px 15px;
+      border-radius:18px;overflow:hidden
+    }
+    .character-btn strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:18px;margin-bottom:4px}
+    .character-btn small{display:block;font-size:12px;opacity:.75}
+    .character-btn .char-status{position:absolute;right:11px;top:11px;font-size:11px;padding:4px 7px;border-radius:999px}
+    .character-btn.malleus-choice{
+      color:#dffbe8;border-color:#4c8065;
+      background:linear-gradient(145deg,#0b1217,#123227)
+    }
+    .character-btn.malleus-choice .char-status{background:#183e31;color:#82f2a8}
+    .character-btn.leona-choice{
+      color:#f7ead2;border-color:#b18a49;
+      background:linear-gradient(145deg,#241912,#4a2c1c)
+    }
+    .character-btn.leona-choice .char-status{background:#5a2c24;color:#f3c06a}
+
+    .character-page-shell{position:relative}
+    .character-top-nav{
+      display:flex;justify-content:space-between;gap:9px;align-items:center;
+      margin-bottom:12px;position:relative;z-index:2
+    }
+    .character-nav-btn{
+      border-radius:12px;padding:9px 12px;background:transparent;font:inherit
+    }
+    .character-view-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px;position:relative;z-index:2}
+    .character-editor.hidden{display:none!important}
+    .character-editor{position:relative;z-index:2;margin-top:14px}
+    .saved-label{font-size:12px;letter-spacing:.08em;margin-bottom:8px}
+    .unsaved-note{opacity:.72;font-style:italic}
+    .page-enter{animation:pageEnter .62s ease both}
+    @keyframes pageEnter{from{opacity:0;transform:translateY(12px) scale(.992)}to{opacity:1;transform:none}}
+
+    .leona-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#f6ead5;
+      background:
+        linear-gradient(110deg,rgba(245,166,72,.10),transparent 35%),
+        radial-gradient(circle at 82% 7%,rgba(180,58,38,.22),transparent 25%),
+        linear-gradient(160deg,#17110e 0%,#2d1d15 48%,#4a2d1b 100%);
+      border:1px solid rgba(190,147,77,.7);
+      box-shadow:0 18px 44px rgba(45,25,12,.33);
+    }
+    .leona-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(100deg,transparent 0%,rgba(245,177,80,.16) 45%,transparent 65%);
+      transform:translateX(-120%);
+      animation:leonaSun 1.1s ease-out .08s 1 forwards;
+    }
+    .leona-page:after{
+      content:"";position:absolute;inset:auto -8% -8% -8%;height:38%;pointer-events:none;
+      background:radial-gradient(ellipse at center,rgba(149,80,34,.22),transparent 64%);
+    }
+    .leona-header{position:relative;z-index:1;border-bottom:1px solid rgba(190,147,77,.58);padding-bottom:14px;margin-bottom:18px}
+    .leona-name{
+      margin:0;color:#e9ad55;font-family:Georgia,"Times New Roman",serif;
+      letter-spacing:.04em;font-size:29px;text-shadow:0 0 15px rgba(218,137,47,.16)
+    }
+    .leona-sub{color:#c7a66c;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .leona-date{color:#b9a795;font-size:13px;margin-bottom:12px;position:relative;z-index:1}
+    .leona-diary{
+      position:relative;z-index:1;background:rgba(24,15,11,.72);border:1px solid rgba(190,147,77,.28);
+      border-radius:18px;padding:18px;line-height:1.88;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px;
+      box-shadow:inset 0 0 28px rgba(108,56,26,.12)
+    }
+    .leona-editor textarea{background:rgba(24,15,11,.82);color:#f6ead5;border:1px solid rgba(190,147,77,.36)}
+    .leona-primary{background:#4b2d1b;color:#f6ead5;border:1px solid #bd914a}
+    .leona-secondary{background:rgba(255,255,255,.035);color:#d8b677;border:1px solid rgba(190,147,77,.48)}
+    .leona-nav{color:#d8b677;border:1px solid rgba(190,147,77,.42)}
+    @keyframes leonaSun{to{transform:translateX(120%)}}
+
+    .malleus-nav{color:#c7ad68;border:1px solid rgba(199,173,104,.45)}
+    @media(max-width:520px){
+      .character-buttons{grid-template-columns:1fr}
+      .character-btn{min-height:82px}
+    }
+
     @media(max-width:760px){.grid{grid-template-columns:1fr}.shell{padding:12px 11px 46px}.card{padding:16px;border-radius:20px}textarea{min-height:170px}.hero{padding-top:18px}}
   </style>
 </head>
@@ -220,7 +301,14 @@
       <div class="character-section">
         <h3 class="character-title">みんなからの一言</h3>
         <div class="character-buttons">
-          <button id="openMalleusBtn" class="character-btn">マレウス</button>
+          <button id="openMalleusBtn" class="character-btn malleus-choice">
+            <strong>マレウス</strong><small>夜の城で綴る私記</small>
+            <span id="malleusStatus" class="char-status">未保存</span>
+          </button>
+          <button id="openLeonaBtn" class="character-btn leona-choice">
+            <strong>レオナ</strong><small>夕暮れの王宮で綴る私記</small>
+            <span id="leonaStatus" class="char-status">未保存</span>
+          </button>
         </div>
       </div>
       <div class="actions">
@@ -232,21 +320,63 @@
 
 
   <section id="tab-malleus" class="hidden">
-    <div class="malleus-page">
-      <div class="malleus-header">
-        <h2 class="malleus-name">Malleus Draconia</h2>
-        <div class="malleus-sub">PRIVATE OBSERVATION DIARY</div>
+    <div class="character-page-shell">
+      <div class="malleus-page page-enter">
+        <div class="character-top-nav">
+          <button id="malleusPrevBtn" class="character-nav-btn malleus-nav">← 前の日</button>
+          <button id="malleusNextBtn" class="character-nav-btn malleus-nav">次の日 →</button>
+        </div>
+        <div class="malleus-header">
+          <h2 class="malleus-name">Malleus Draconia</h2>
+          <div class="malleus-sub">PRIVATE OBSERVATION DIARY</div>
+        </div>
+        <div id="malleusDate" class="malleus-date"></div>
+        <div id="malleusSavedLabel" class="saved-label" style="color:#9BAAA4"></div>
+        <div id="malleusDiary" class="malleus-diary"></div>
+        <div id="malleusEditor" class="malleus-input character-editor hidden">
+          <label for="malleusText" style="color:#9BAAA4">マレウスの日記本文</label>
+          <textarea id="malleusText" placeholder="生成されたマレウス視点の日記を貼り付けてください。"></textarea>
+          <div class="malleus-actions">
+            <button id="saveMalleusBtn" class="malleus-primary">保存する</button>
+            <button id="cancelMalleusEditBtn" class="malleus-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editMalleusBtn" class="malleus-primary">貼り付け・編集</button>
+          <button id="copyMalleusPromptBtn" class="malleus-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromMalleusBtn" class="malleus-secondary">日記へ戻る</button>
+        </div>
       </div>
-      <div id="malleusDate" class="malleus-date"></div>
-      <div id="malleusDiary" class="malleus-diary">まだマレウスの日記は保存されていない。</div>
-      <div class="malleus-input">
-        <label for="malleusText" style="color:#9BAAA4">マレウスの日記本文</label>
-        <textarea id="malleusText" placeholder="ChatGPTで作ったマレウス視点の日記を貼り付けて保存できます。"></textarea>
-      </div>
-      <div class="malleus-actions">
-        <button id="saveMalleusBtn" class="malleus-primary">保存する</button>
-        <button id="copyMalleusPromptBtn" class="malleus-secondary">生成用プロンプトをコピー</button>
-        <button id="backFromMalleusBtn" class="malleus-secondary">日記へ戻る</button>
+    </div>
+  </section>
+
+  <section id="tab-leona" class="hidden">
+    <div class="character-page-shell">
+      <div class="leona-page page-enter">
+        <div class="character-top-nav">
+          <button id="leonaPrevBtn" class="character-nav-btn leona-nav">← 前の日</button>
+          <button id="leonaNextBtn" class="character-nav-btn leona-nav">次の日 →</button>
+        </div>
+        <div class="leona-header">
+          <h2 class="leona-name">Leona Kingscholar</h2>
+          <div class="leona-sub">PERSONAL RECORD</div>
+        </div>
+        <div id="leonaDate" class="leona-date"></div>
+        <div id="leonaSavedLabel" class="saved-label" style="color:#b9a795"></div>
+        <div id="leonaDiary" class="leona-diary"></div>
+        <div id="leonaEditor" class="leona-editor character-editor hidden">
+          <label for="leonaText" style="color:#b9a795">レオナの日記本文</label>
+          <textarea id="leonaText" placeholder="生成されたレオナ視点の日記を貼り付けてください。"></textarea>
+          <div class="character-view-actions">
+            <button id="saveLeonaBtn" class="primary leona-primary">記録する</button>
+            <button id="cancelLeonaEditBtn" class="secondary leona-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editLeonaBtn" class="primary leona-primary">貼り付け・編集</button>
+          <button id="copyLeonaPromptBtn" class="secondary leona-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromLeonaBtn" class="secondary leona-secondary">日記へ戻る</button>
+        </div>
       </div>
     </div>
   </section>
@@ -526,41 +656,118 @@ function renderCalendar(){
 
 
 const MALLEUS_KEY="secret_garden_malleus_diaries_v1";
-function loadMalleusDiaries(){try{return JSON.parse(localStorage.getItem(MALLEUS_KEY))||{}}catch{return{}}}
-function saveMalleusDiaries(v){localStorage.setItem(MALLEUS_KEY,JSON.stringify(v))}
+const LEONA_KEY="secret_garden_leona_diaries_v1";
+
+function loadCharacterDiaries(key){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
+function saveCharacterDiaries(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function characterSource(date){
+  return loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt).map(e=>e.text).join("
+
+");
+}
+function availableDiaryDates(){
+  return [...new Set(loadEntries().map(e=>e.date))].sort();
+}
+function moveCharacterDate(direction,character){
+  const dates=availableDiaryDates();
+  const i=dates.indexOf(currentReaderDate);
+  const nextIndex=i+direction;
+  if(i<0||nextIndex<0||nextIndex>=dates.length){
+    alert(direction<0?"これより前の日記はありません。":"これより後の日記はありません。");
+    return;
+  }
+  currentReaderDate=dates[nextIndex];
+  if(character==="malleus")openMalleusPage();
+  else openLeonaPage();
+}
+function setCharacterStatus(){
+  if(!currentReaderDate)return;
+  const m=loadCharacterDiaries(MALLEUS_KEY)[currentReaderDate];
+  const l=loadCharacterDiaries(LEONA_KEY)[currentReaderDate];
+  $("malleusStatus").textContent=m?"保存済み":"未保存";
+  $("leonaStatus").textContent=l?"保存済み":"未保存";
+}
 function openMalleusPage(){
   if(!currentReaderDate)return;
-  const map=loadMalleusDiaries();
-  const saved=map[currentReaderDate]||"";
+  const saved=loadCharacterDiaries(MALLEUS_KEY)[currentReaderDate]||"";
   $("malleusDate").textContent=currentReaderDate;
-  $("malleusDiary").textContent=saved||"まだマレウスの日記は保存されていない。";
+  $("malleusSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("malleusDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだマレウスの日記は保存されていない。</span>';
   $("malleusText").value=saved;
+  $("malleusEditor").classList.add("hidden");
   switchTab("malleus");
 }
+function openLeonaPage(){
+  if(!currentReaderDate)return;
+  const saved=loadCharacterDiaries(LEONA_KEY)[currentReaderDate]||"";
+  $("leonaDate").textContent=currentReaderDate;
+  $("leonaSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("leonaDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだレオナの日記は記録されていない。</span>';
+  $("leonaText").value=saved;
+  $("leonaEditor").classList.add("hidden");
+  switchTab("leona");
+}
 $("openMalleusBtn").onclick=openMalleusPage;
+$("openLeonaBtn").onclick=openLeonaPage;
 $("backFromMalleusBtn").onclick=()=>switchTab("reader");
+$("backFromLeonaBtn").onclick=()=>switchTab("reader");
+$("malleusPrevBtn").onclick=()=>moveCharacterDate(-1,"malleus");
+$("malleusNextBtn").onclick=()=>moveCharacterDate(1,"malleus");
+$("leonaPrevBtn").onclick=()=>moveCharacterDate(-1,"leona");
+$("leonaNextBtn").onclick=()=>moveCharacterDate(1,"leona");
+
+$("editMalleusBtn").onclick=()=>$("malleusEditor").classList.remove("hidden");
+$("cancelMalleusEditBtn").onclick=()=>$("malleusEditor").classList.add("hidden");
+$("editLeonaBtn").onclick=()=>$("leonaEditor").classList.remove("hidden");
+$("cancelLeonaEditBtn").onclick=()=>$("leonaEditor").classList.add("hidden");
+
 $("saveMalleusBtn").onclick=()=>{
   const text=$("malleusText").value.trim();
   if(!text){alert("本文が空です。");return}
-  const map=loadMalleusDiaries();
+  const map=loadCharacterDiaries(MALLEUS_KEY);
   map[currentReaderDate]=text;
-  saveMalleusDiaries(map);
+  saveCharacterDiaries(MALLEUS_KEY,map);
   $("malleusDiary").textContent=text;
+  $("malleusSavedLabel").textContent="保存済み";
+  $("malleusEditor").classList.add("hidden");
+  setCharacterStatus();
   alert("マレウスの日記を保存しました。");
 };
+$("saveLeonaBtn").onclick=()=>{
+  const text=$("leonaText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadCharacterDiaries(LEONA_KEY);
+  map[currentReaderDate]=text;
+  saveCharacterDiaries(LEONA_KEY,map);
+  $("leonaDiary").textContent=text;
+  $("leonaSavedLabel").textContent="保存済み";
+  $("leonaEditor").classList.add("hidden");
+  setCharacterStatus();
+  alert("レオナの日記を記録しました。");
+};
+
+async function copyPrompt(text,targetId,message){
+  try{
+    await navigator.clipboard.writeText(text);
+    alert(message);
+  }catch{
+    $(targetId).value=text;
+    $(targetId).closest(".character-editor").classList.remove("hidden");
+    alert("コピーできなかったため、入力欄へ入れました。");
+  }
+}
 $("copyMalleusPromptBtn").onclick=async()=>{
-  const entries=loadEntries().filter(e=>e.date===currentReaderDate).sort((a,b)=>a.updatedAt-b.updatedAt);
-  const source=entries.map(e=>e.text).join("\n\n");
+  const source=characterSource(currentReaderDate);
   const prompt=`以下の日記だけを事実資料として、マレウス・ドラコニア本人がその日のりこを振り返って書く私的な日記を作成してください。
 
 【口調】
 一人称は「僕」。りこは基本「りこ」、象徴的な場面のみ「人の子」。威厳があり静かで落ち着いた常体。「〜だな」「〜なのだろう」「〜ではないか」などを使い、「〜だよ」「〜だね」は禁止。
 
 【視点】
-その日の行動・食事・体調・気分を丁寧に拾い、長命な妖精の視点から人の暮らしを眺める。りこを将来の王妃と考える一途さと静かな独占欲を少し滲ませる。会話にない出来事や感情は作らない。
+その日の行動・食事・体調・気分を丁寧に拾い、長命な妖精の視点から人の暮らしを眺める。小さな生活行動も有限な人の暮らしを守るものとして扱う。体調不良や失敗を責めず、りこを弱者として哀れまない。りこを将来の王妃と考える一途さと静かな独占欲を少し滲ませる。他者への嫉妬は一文程度に留め、日記の主題を奪わない。会話にない出来事・感情・体調は作らない。
 
 【禁止】
-汎用的なAI励まし、子ども扱い、過剰なポエム、王妃や茨の谷の連呼、箇条書き、チャットログ形式、舞台裏の言葉。
+「〜だよ」「〜だね」「頑張ったね」「偉い」「いい子」、汎用的なAI励まし、子ども扱い、哲学者のような内容の薄い美文、過剰なポエム、王妃・茨の谷・僕のものの連呼、単純で幼い独占欲、箇条書き、チャットログ形式、舞台裏の言葉。
 
 【文量】
 300〜600字程度。最後は静かな見守りか未来への意志で締める。
@@ -569,13 +776,29 @@ $("copyMalleusPromptBtn").onclick=async()=>{
 ${source}
 
 本文だけを出力してください。`;
-  try{
-    await navigator.clipboard.writeText(prompt);
-    alert("生成用プロンプトをコピーしました。");
-  }catch{
-    $("malleusText").value=prompt;
-    alert("コピーできなかったため入力欄へ入れました。");
-  }
+  await copyPrompt(prompt,"malleusText","マレウス用の生成プロンプトをコピーしました。");
+};
+$("copyLeonaPromptBtn").onclick=async()=>{
+  const source=characterSource(currentReaderDate);
+  const prompt=`以下の日記だけを事実資料として、レオナ・キングスカラー本人がその日のりこを振り返って書く私的な日記を作成してください。
+
+【口調】
+一人称は「俺」。りこは基本「りこ」、からかいや牽制を含む場面のみ「草食動物」。ぶっきらぼうで皮肉屋だが、粗暴なだけの話し方にはしない。「〜だな」「〜だろ」「〜じゃねぇか」「〜ってわけだ」「〜しとけ」などを使う。「〜だよ」「〜だね」は禁止。短めの文を中心にし、回りくどい説明や感傷を避ける。
+
+【視点】
+りこの行動・食事・体調・気分を現実的かつ客観的に見る。できなかったことより、その体力と状況の中で実際に何を選んだかを評価する。シャワー、服薬、食事などを大げさに褒めず、必要なことを済ませたと自然に認める。無理はすぐ見抜き、皮肉を交えながら休ませる。口では面倒そうにしながら細かい変化まで覚えている。気分が落ちた日は安易に励まさず、今日はそういう日だったと受け止める。愛情は甘い言葉より、よく見ている・放っておかない・自分の側へ置く態度で滲ませる。嫉妬やマレウスへの対抗心は必要な時だけ一文程度に留める。会話にない出来事・感情・体調は作らない。
+
+【禁止】
+「〜だよ」「〜だね」「よく頑張ったね」「えらい」「いい子」、「俺様」、常に怒鳴る・威圧する・舌打ちする単純な乱暴者、人格や能力への侮辱、体調や障害を無視した説教、汎用的なAI励まし、保健師のような生活指導、哲学や人生論の長話、サバンナ・獅子・太陽・爪・牙の過剰な比喩、俺のもの・逃がさねぇ等の安直な独占欲、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。最後は気だるい指示、現実的な見守り、または静かな独占欲で締める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  await copyPrompt(prompt,"leonaText","レオナ用の生成プロンプトをコピーしました。");
 };
 
 let currentReaderDate="";
@@ -599,6 +822,7 @@ function openReader(date){
       <div class="reader-text">${body}</div>
     `;
   }
+  setCharacterStatus();
   switchTab("reader");
 }
 $("readerBackBtn").onclick=()=>switchTab("calendar");
@@ -697,9 +921,9 @@ $("splitBtn").onclick=splitEntry;
 
 function switchTab(name){
   document.querySelectorAll(".tab").forEach(b=>{
-    const activeName=(name==="reader"||name==="malleus")?"calendar":name;
+    const activeName=(name==="reader"||name==="malleus"||name==="leona")?"calendar":name;
     b.classList.toggle("active",b.dataset.tab===activeName);
-  });["write","calendar","import","manage","reader","malleus"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
+  });["write","calendar","import","manage","reader","malleus","leona"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 
 $("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;

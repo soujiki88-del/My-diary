@@ -1049,6 +1049,79 @@ input[type="month"]::-webkit-calendar-picker-indicator{
   }
 }
 
+
+/* =========================================================
+   Secret Garden v8.2 — Character button visibility fix
+   ========================================================= */
+
+.illuso-page .character-view-actions button,
+.still-page .character-view-actions button,
+.neji-page .character-view-actions button,
+.kousetsu-page .character-view-actions button{
+  min-height:52px;
+  font-weight:700;
+  letter-spacing:.02em;
+  text-shadow:none;
+  opacity:1;
+  box-shadow:0 8px 18px rgba(0,0,0,.16);
+}
+
+.illuso-page .illuso-primary{
+  background:linear-gradient(145deg,#66477f,#4a315f) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.34) !important;
+}
+.illuso-page .illuso-secondary{
+  background:#f4eef8 !important;
+  color:#3d294c !important;
+  border:1px solid #9d88aa !important;
+}
+
+.still-page .still-primary{
+  background:linear-gradient(145deg,#b7426f,#8d234b) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.38) !important;
+}
+.still-page .still-secondary{
+  background:#fff6f7 !important;
+  color:#6e1737 !important;
+  border:1px solid #b98495 !important;
+}
+
+.neji-page .neji-primary{
+  background:linear-gradient(145deg,#625b79,#454057) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.38) !important;
+}
+.neji-page .neji-secondary{
+  background:#f5f1e8 !important;
+  color:#343044 !important;
+  border:1px solid #9b93aa !important;
+}
+
+.kousetsu-page .kousetsu-primary{
+  background:linear-gradient(145deg,#4f7394,#365873) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.40) !important;
+}
+.kousetsu-page .kousetsu-secondary{
+  background:#f3f8fb !important;
+  color:#24445f !important;
+  border:1px solid #91a9bb !important;
+}
+
+.illuso-page button:disabled,
+.still-page button:disabled,
+.neji-page button:disabled,
+.kousetsu-page button:disabled{
+  background:#d8d5dc !important;
+  color:#6e6872 !important;
+  border:1px solid #b8b2bd !important;
+  opacity:1 !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
 </style>
 </head>
 <body>

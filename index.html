@@ -18,56 +18,32 @@
     }
     *{box-sizing:border-box}
     html{min-height:100%;background:var(--bg)}
-    body{
-      margin:0;min-height:100vh;color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
-      background:
-        radial-gradient(circle at 20% 5%,rgba(255,255,255,.96),transparent 26%),
-        linear-gradient(145deg,#fff9fc,#f9eaf1 55%,#fffdfd);
-    }
-    button,input,textarea{font:inherit}
+    body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:radial-gradient(circle at 20% 5%,rgba(255,255,255,.96),transparent 26%),linear-gradient(145deg,#fff9fc,#f9eaf1 55%,#fffdfd)}
+    button,input,textarea,select{font:inherit}
     button{touch-action:manipulation}
     .hidden{display:none!important}
-    .shell{max-width:920px;margin:auto;padding:18px 14px 56px}
+    .shell{max-width:980px;margin:auto;padding:18px 14px 56px}
     .hero{text-align:center;padding:25px 10px 18px}
-    .hero h1{
-      margin:0;color:var(--deep);font-family:Georgia,"Times New Roman",serif;
-      font-size:clamp(34px,10vw,50px);font-weight:500;letter-spacing:.05em
-    }
+    .hero h1{margin:0;color:var(--deep);font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,10vw,50px);font-weight:500;letter-spacing:.05em}
     .hero p{margin:7px 0 0;color:var(--muted);font-size:12px;letter-spacing:.2em}
     .bow{font-size:27px;color:var(--deep);margin-top:10px}
     .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
-    .card{
-      background:rgba(255,253,253,.94);border:1px solid var(--line);
-      border-radius:24px;box-shadow:var(--shadow);padding:18px;backdrop-filter:blur(8px)
-    }
-    .card h2{
-      margin:0 0 14px;color:var(--deep);font-family:Georgia,"Times New Roman",serif;
-      font-weight:500;font-size:22px
-    }
+    .card{background:rgba(255,253,253,.94);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;backdrop-filter:blur(8px)}
+    .card h2{margin:0 0 14px;color:var(--deep);font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:22px}
     .ornament{height:10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:10px 0 18px;position:relative}
     .ornament:after{content:"◇";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--panel);padding:0 8px;color:var(--pink)}
     label{display:block;font-size:13px;color:var(--muted);margin:13px 0 7px}
-    input[type=date],input[type=text],input[type=password],textarea{
-      width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;
-      padding:12px 13px;color:var(--text);outline:none
-    }
-    textarea{min-height:190px;resize:vertical;line-height:1.7}
-    input:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(234,180,200,.2)}
-    .stars,.moods,.actions{display:flex;gap:8px;flex-wrap:wrap}
-    .star{
-      border:1px solid var(--line);background:#fff;color:#c698aa;width:43px;height:43px;
-      border-radius:50%;font-size:19px
-    }
+    input[type=date],input[type=text],input[type=password],input[type=month],textarea,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 13px;color:var(--text);outline:none}
+    textarea{min-height:180px;resize:vertical;line-height:1.7}
+    input:focus,textarea:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(234,180,200,.2)}
+    .stars,.moods,.actions,.checks{display:flex;gap:8px;flex-wrap:wrap}
+    .star{border:1px solid var(--line);background:#fff;color:#c698aa;width:43px;height:43px;border-radius:50%;font-size:19px}
     .star.active{background:var(--pink2);border-color:var(--pink);color:var(--deep)}
-    .mood{
-      border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;color:var(--muted)
-    }
+    .mood{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;color:var(--muted)}
     .mood.active{background:var(--pink2);border-color:var(--pink);color:var(--deep)}
+    .checkpill{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 10px;color:var(--muted)}
     .actions{margin-top:16px}
-    .primary,.secondary,.danger{
-      border-radius:14px;padding:11px 15px;border:1px solid transparent
-    }
+    .primary,.secondary,.danger{border-radius:14px;padding:11px 15px;border:1px solid transparent}
     .primary{background:linear-gradient(135deg,#d98eaa,#b66585);color:white;flex:1}
     .secondary{background:#fff;color:var(--deep);border-color:var(--line)}
     .danger{background:#fff0f3;color:#a54f68;border-color:#efcbd6}
@@ -76,6 +52,7 @@
     .entry{border:1px solid var(--line);border-radius:17px;background:#fff;padding:13px}
     .entry-date{font-weight:700;color:var(--deep)}
     .entry-meta{font-size:12px;color:var(--muted);margin-top:3px}
+    .entry-tags{font-size:12px;color:var(--deep);margin-top:7px}
     .entry-text{white-space:pre-wrap;line-height:1.65;margin:10px 0 0}
     .entry-buttons{display:flex;gap:7px;margin-top:11px}
     .entry-buttons button{font-size:12px;padding:7px 10px;border-radius:10px}
@@ -83,60 +60,68 @@
     .topbar{display:flex;justify-content:flex-end;margin-bottom:4px}
     .lockbtn{border:0;background:transparent;color:var(--muted);padding:8px}
     .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:17px}
-    .gate{
-      min-height:100vh;display:grid;place-items:center;padding:20px;
-      background:
-        radial-gradient(circle at 50% 15%,rgba(255,255,255,.98),transparent 25%),
-        linear-gradient(145deg,#fff8fb,#f7e4ed);
-    }
-    .gatebox{
-      width:min(100%,420px);background:rgba(255,253,253,.96);border:1px solid var(--line);
-      border-radius:28px;box-shadow:var(--shadow);padding:26px;text-align:center
-    }
+    .gate{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.98),transparent 25%),linear-gradient(145deg,#fff8fb,#f7e4ed)}
+    .gatebox{width:min(100%,420px);background:rgba(255,253,253,.96);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:26px;text-align:center}
     .gatebox h1{font-family:Georgia,"Times New Roman",serif;color:var(--deep);font-weight:500;margin:0}
     .gatebox p{color:var(--muted);line-height:1.6;font-size:14px}
     .gatebox input{margin:7px 0}
     .gatebox .primary{width:100%;margin-top:10px}
     .note{font-size:12px!important}
-    @media(max-width:760px){
-      .grid{grid-template-columns:1fr}.shell{padding:12px 11px 46px}.card{padding:16px;border-radius:20px}
-      textarea{min-height:170px}.hero{padding-top:18px}
-    }
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;color:var(--muted)}
+    .tab.active{background:var(--pink2);color:var(--deep);border-color:var(--pink)}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+    .cal-head,.cal-day{text-align:center;padding:8px 2px}
+    .cal-head{font-size:12px;color:var(--muted)}
+    .cal-day{min-height:48px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--text)}
+    .cal-day.has{background:var(--pink2);color:var(--deep);font-weight:700}
+    .cal-day.empty{border-color:transparent;background:transparent}
+    .importbox{min-height:220px}
+    .status{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.6}
+    @media(max-width:760px){.grid{grid-template-columns:1fr}.shell{padding:12px 11px 46px}.card{padding:16px;border-radius:20px}textarea{min-height:170px}.hero{padding-top:18px}}
   </style>
 </head>
 <body>
-  <section id="gate" class="gate">
-    <div class="gatebox">
-      <div class="bow">୨୧</div>
-      <h1>Secret Garden</h1>
-      <p id="gateText">最初に、あなた専用のパスコードを決めます。</p>
-      <input id="pass1" type="password" inputmode="numeric" autocomplete="new-password" placeholder="4〜12桁のパスコード">
-      <input id="pass2" class="hidden" type="password" inputmode="numeric" autocomplete="new-password" placeholder="確認のためもう一度">
-      <button id="gateBtn" class="primary">設定する</button>
-      <p class="note">これは簡易ロックです。日記データ自体はこの端末のブラウザ内に保存されます。</p>
-    </div>
-  </section>
+<section id="gate" class="gate">
+  <div class="gatebox">
+    <div class="bow">୨୧</div><h1>Secret Garden</h1>
+    <p id="gateText">最初に、あなた専用のパスコードを決めます。</p>
+    <input id="pass1" type="password" inputmode="numeric" autocomplete="new-password" placeholder="4〜12桁のパスコード">
+    <input id="pass2" class="hidden" type="password" inputmode="numeric" autocomplete="new-password" placeholder="確認のためもう一度">
+    <button id="gateBtn" class="primary">設定する</button>
+    <p class="note">これは簡易ロックです。日記データはこの端末のブラウザ内に保存されます。</p>
+  </div>
+</section>
 
-  <main id="app" class="shell hidden">
-    <div class="topbar"><button id="lockBtn" class="lockbtn">🔒 ロック</button></div>
-    <header class="hero">
-      <h1>Secret Garden</h1>
-      <p>MY LITTLE BALLETCORE JOURNAL</p>
-      <div class="bow">୨୧</div>
-    </header>
+<main id="app" class="shell hidden">
+  <div class="topbar"><button id="lockBtn" class="lockbtn">🔒 ロック</button></div>
+  <header class="hero"><h1>Secret Garden</h1><p>MY LITTLE BALLETCORE JOURNAL</p><div class="bow">୨୧</div></header>
 
+  <div class="tabs">
+    <button class="tab active" data-tab="write">日記を書く</button>
+    <button class="tab" data-tab="calendar">カレンダー</button>
+    <button class="tab" data-tab="import">追加インポート</button>
+  </div>
+
+  <section id="tab-write">
     <section class="grid">
       <div class="card">
         <h2>Today’s page</h2><div class="ornament"></div>
         <label for="date">日付</label><input id="date" type="date">
         <label>5段階評価</label><div id="stars" class="stars"></div>
         <label>今日の気分</label><div id="moods" class="moods"></div>
+        <label>記録</label>
+        <div class="checks">
+          <label class="checkpill"><input type="checkbox" value="シャワー">シャワー</label>
+          <label class="checkpill"><input type="checkbox" value="洗濯">洗濯</label>
+          <label class="checkpill"><input type="checkbox" value="頭痛">頭痛</label>
+          <label class="checkpill"><input type="checkbox" value="通院">通院</label>
+          <label class="checkpill"><input type="checkbox" value="服薬">服薬</label>
+          <label class="checkpill"><input type="checkbox" value="外出">外出</label>
+        </div>
         <label for="text">日記</label>
         <textarea id="text" placeholder="今日は何をした？ 体調、気分、食べたもの、嬉しかったことなど。"></textarea>
-        <div class="actions">
-          <button id="clearBtn" class="secondary">新規</button>
-          <button id="saveBtn" class="primary">保存する</button>
-        </div>
+        <div class="actions"><button id="clearBtn" class="secondary">新規</button><button id="saveBtn" class="primary">保存する</button></div>
       </div>
 
       <div class="card">
@@ -145,13 +130,33 @@
         <div id="entryList" class="entry-list"></div>
         <div class="actions">
           <button id="exportBtn" class="secondary">バックアップ</button>
-          <button id="importBtn" class="secondary">読み込み</button>
+          <button id="importFileBtn" class="secondary">ファイル追加</button>
           <input id="fileInput" type="file" accept="application/json" hidden>
         </div>
       </div>
     </section>
-    <p class="footer">日記はこの端末内に保存されます。大事な記録は定期的にバックアップしてください。</p>
-  </main>
+  </section>
+
+  <section id="tab-calendar" class="hidden">
+    <div class="card">
+      <h2>Calendar</h2><div class="ornament"></div>
+      <input id="monthPicker" type="month">
+      <div id="calendar" class="calendar-grid" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <section id="tab-import" class="hidden">
+    <div class="card">
+      <h2>ChatGPT Diary Import</h2><div class="ornament"></div>
+      <p class="note">ChatGPTから受け取ったJSONをそのまま貼り付けてください。既存の日記は消さず、新しい分だけ追加します。</p>
+      <textarea id="importText" class="importbox" placeholder='{"entries":[{"date":"2026-07-13","rating":5,"mood":"嬉しい","text":"Secret Gardenを作った。","checks":["外出"]}]}'></textarea>
+      <div class="actions"><button id="previewImportBtn" class="secondary">確認する</button><button id="runImportBtn" class="primary">追加する</button></div>
+      <div id="importStatus" class="status"></div>
+    </div>
+  </section>
+
+  <p class="footer">日記はこの端末内に保存されます。定期的にバックアップしてください。</p>
+</main>
 
 <script>
 const ENTRY_KEY="secret_garden_entries_v1";
@@ -161,119 +166,98 @@ const moods=["穏やか","嬉しい","普通","疲れた","しんどい","怒り
 let rating=3,selectedMood="普通",editingId=null;
 const $=id=>document.getElementById(id);
 
-async function digest(text){
-  const data=new TextEncoder().encode(text);
-  const hash=await crypto.subtle.digest("SHA-256",data);
-  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-function today(){
-  const d=new Date(),off=d.getTimezoneOffset();
-  return new Date(d.getTime()-off*60000).toISOString().slice(0,10);
-}
+async function digest(text){const data=new TextEncoder().encode(text);const hash=await crypto.subtle.digest("SHA-256",data);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("")}
+function today(){const d=new Date(),off=d.getTimezoneOffset();return new Date(d.getTime()-off*60000).toISOString().slice(0,10)}
 function loadEntries(){try{return JSON.parse(localStorage.getItem(ENTRY_KEY))||[]}catch{return[]}}
 function saveEntries(v){localStorage.setItem(ENTRY_KEY,JSON.stringify(v))}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
+function makeFingerprint(e){return `${e.date}|${e.text.trim().toLowerCase()}`}
 
 async function initGate(){
   const saved=localStorage.getItem(PASS_KEY);
   if(sessionStorage.getItem(SESSION_KEY)==="1"){showApp();return}
-  $("pass1").value=""; $("pass2").value="";
-  if(saved){
-    $("gateText").textContent="パスコードを入力してください。";
-    $("pass2").classList.add("hidden");
-    $("gateBtn").textContent="開く";
-  }else{
-    $("gateText").textContent="最初に、あなた専用のパスコードを決めます。";
-    $("pass2").classList.remove("hidden");
-    $("gateBtn").textContent="設定する";
-  }
-  $("gate").classList.remove("hidden"); $("app").classList.add("hidden");
+  $("pass1").value="";$("pass2").value="";
+  if(saved){$("gateText").textContent="パスコードを入力してください。";$("pass2").classList.add("hidden");$("gateBtn").textContent="開く"}
+  else{$("gateText").textContent="最初に、あなた専用のパスコードを決めます。";$("pass2").classList.remove("hidden");$("gateBtn").textContent="設定する"}
+  $("gate").classList.remove("hidden");$("app").classList.add("hidden");
 }
 $("gateBtn").onclick=async()=>{
   const p1=$("pass1").value.trim(),saved=localStorage.getItem(PASS_KEY);
   if(!/^\d{4,12}$/.test(p1)){alert("4〜12桁の数字で入力してください。");return}
   if(!saved){
     if(p1!==$("pass2").value.trim()){alert("確認用のパスコードが一致しません。");return}
-    localStorage.setItem(PASS_KEY,await digest(p1));
-    sessionStorage.setItem(SESSION_KEY,"1"); showApp();
+    localStorage.setItem(PASS_KEY,await digest(p1));sessionStorage.setItem(SESSION_KEY,"1");showApp()
   }else{
     if(await digest(p1)!==saved){alert("パスコードが違います。");return}
-    sessionStorage.setItem(SESSION_KEY,"1"); showApp();
+    sessionStorage.setItem(SESSION_KEY,"1");showApp()
   }
-};
-function showApp(){
-  $("gate").classList.add("hidden");$("app").classList.remove("hidden");
-  resetForm();renderEntries();
 }
-$("lockBtn").onclick=()=>{sessionStorage.removeItem(SESSION_KEY);initGate()};
+function showApp(){$("gate").classList.add("hidden");$("app").classList.remove("hidden");resetForm();renderEntries();renderCalendar()}
+$("lockBtn").onclick=()=>{sessionStorage.removeItem(SESSION_KEY);initGate()}
 
 function renderStars(){
   $("stars").innerHTML="";
-  for(let i=1;i<=5;i++){
-    const b=document.createElement("button");b.type="button";b.className="star"+(i<=rating?" active":"");b.textContent="★";
-    b.onclick=()=>{rating=i;renderStars()};$("stars").appendChild(b);
-  }
+  for(let i=1;i<=5;i++){const b=document.createElement("button");b.type="button";b.className="star"+(i<=rating?" active":"");b.textContent="★";b.onclick=()=>{rating=i;renderStars()};$("stars").appendChild(b)}
 }
 function renderMoods(){
   $("moods").innerHTML="";
-  moods.forEach(m=>{const b=document.createElement("button");b.type="button";b.className="mood"+(m===selectedMood?" active":"");b.textContent=m;
-    b.onclick=()=>{selectedMood=m;renderMoods()};$("moods").appendChild(b)})
+  moods.forEach(m=>{const b=document.createElement("button");b.type="button";b.className="mood"+(m===selectedMood?" active":"");b.textContent=m;b.onclick=()=>{selectedMood=m;renderMoods()};$("moods").appendChild(b)})
 }
-function resetForm(){
-  editingId=null;$("date").value=today();$("text").value="";rating=3;selectedMood="普通";
-  $("saveBtn").textContent="保存する";renderStars();renderMoods();
-}
+function getChecks(){return [...document.querySelectorAll(".checkpill input:checked")].map(x=>x.value)}
+function setChecks(values=[]){document.querySelectorAll(".checkpill input").forEach(x=>x.checked=values.includes(x.value))}
+function resetForm(){editingId=null;$("date").value=today();$("text").value="";rating=3;selectedMood="普通";setChecks([]);$("saveBtn").textContent="保存する";renderStars();renderMoods()}
 function saveCurrent(){
-  const text=$("text").value.trim(),date=$("date").value;
-  if(!date){alert("日付を選んでください。");return}
-  if(!text){alert("日記本文が空です。");return}
-  const entries=loadEntries();
-  const item={id:editingId||(Date.now().toString(36)+Math.random().toString(36).slice(2)),date,rating,mood:selectedMood,text,updatedAt:Date.now()};
-  const i=entries.findIndex(e=>e.id===item.id); if(i>=0)entries[i]=item;else entries.push(item);
-  entries.sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt-a.updatedAt);
-  saveEntries(entries);resetForm();renderEntries();
+  const text=$("text").value.trim(),date=$("date").value;if(!date){alert("日付を選んでください。");return}if(!text){alert("日記本文が空です。");return}
+  const entries=loadEntries();const item={id:editingId||(Date.now().toString(36)+Math.random().toString(36).slice(2)),date,rating,mood:selectedMood,text,checks:getChecks(),updatedAt:Date.now()};
+  const i=entries.findIndex(e=>e.id===item.id);if(i>=0)entries[i]=item;else entries.push(item);
+  entries.sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt-a.updatedAt);saveEntries(entries);resetForm();renderEntries();renderCalendar()
 }
 function renderEntries(){
-  const q=$("search").value.trim().toLowerCase();
-  const entries=loadEntries().filter(e=>`${e.date} ${e.mood} ${e.text}`.toLowerCase().includes(q));
-  $("entryList").innerHTML="";
-  if(!entries.length){$("entryList").innerHTML='<div class="empty">まだ日記がありません。</div>';return}
-  entries.forEach(e=>{
-    const a=document.createElement("article");a.className="entry";
-    a.innerHTML=`<div class="entry-date">${escapeHtml(e.date)}</div><div class="entry-meta">${"★".repeat(e.rating)}${"☆".repeat(5-e.rating)} ・ ${escapeHtml(e.mood)}</div><p class="entry-text">${escapeHtml(e.text)}</p><div class="entry-buttons"><button class="secondary" data-edit="${e.id}">編集</button><button class="danger" data-delete="${e.id}">削除</button></div>`;
-    $("entryList").appendChild(a)
-  });
-  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));
-  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteEntry(b.dataset.delete));
+  const q=$("search").value.trim().toLowerCase();const entries=loadEntries().filter(e=>`${e.date} ${e.mood} ${(e.checks||[]).join(" ")} ${e.text}`.toLowerCase().includes(q));
+  $("entryList").innerHTML="";if(!entries.length){$("entryList").innerHTML='<div class="empty">まだ日記がありません。</div>';return}
+  entries.forEach(e=>{const a=document.createElement("article");a.className="entry";a.innerHTML=`<div class="entry-date">${escapeHtml(e.date)}</div><div class="entry-meta">${"★".repeat(e.rating)}${"☆".repeat(5-e.rating)} ・ ${escapeHtml(e.mood)}</div>${(e.checks||[]).length?`<div class="entry-tags">${escapeHtml(e.checks.join("・"))}</div>`:""}<p class="entry-text">${escapeHtml(e.text)}</p><div class="entry-buttons"><button class="secondary" data-edit="${e.id}">編集</button><button class="danger" data-delete="${e.id}">削除</button></div>`;$("entryList").appendChild(a)});
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteEntry(b.dataset.delete))
 }
-function editEntry(id){
-  const e=loadEntries().find(x=>x.id===id);if(!e)return;
-  editingId=id;$("date").value=e.date;rating=e.rating;selectedMood=e.mood;$("text").value=e.text;
-  $("saveBtn").textContent="更新する";renderStars();renderMoods();scrollTo({top:0,behavior:"smooth"});
-}
-function deleteEntry(id){
-  if(!confirm("この日記を削除しますか？"))return;
-  saveEntries(loadEntries().filter(e=>e.id!==id));if(editingId===id)resetForm();renderEntries();
-}
-function exportData(){
-  const payload={app:"Secret Garden",version:1,exportedAt:new Date().toISOString(),entries:loadEntries()};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`secret-garden-backup-${today()}.json`;a.click();URL.revokeObjectURL(a.href);
-}
-function importData(file){
-  const r=new FileReader();r.onload=()=>{
-    try{
-      const d=JSON.parse(r.result),entries=Array.isArray(d)?d:d.entries;
-      if(!Array.isArray(entries))throw new Error();
-      if(!confirm(`バックアップ内の${entries.length}件で、現在の日記を置き換えますか？`))return;
-      saveEntries(entries);renderEntries();alert("読み込みました。");
-    }catch{alert("読み込めないファイルです。")}
-  };r.readAsText(file);
-}
-$("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;
-$("exportBtn").onclick=exportData;$("importBtn").onclick=()=>$("fileInput").click();
-$("fileInput").onchange=e=>{const f=e.target.files[0];if(f)importData(f);e.target.value=""};
+function editEntry(id){const e=loadEntries().find(x=>x.id===id);if(!e)return;editingId=id;$("date").value=e.date;rating=e.rating;selectedMood=e.mood;$("text").value=e.text;setChecks(e.checks||[]);$("saveBtn").textContent="更新する";renderStars();renderMoods();switchTab("write");scrollTo({top:0,behavior:"smooth"})}
+function deleteEntry(id){if(!confirm("この日記を削除しますか？"))return;saveEntries(loadEntries().filter(e=>e.id!==id));if(editingId===id)resetForm();renderEntries();renderCalendar()}
 
+function normalizeImported(raw){
+  const arr=Array.isArray(raw)?raw:raw.entries;if(!Array.isArray(arr))throw new Error("entriesがありません");
+  return arr.map(e=>({
+    id:e.id||(Date.now().toString(36)+Math.random().toString(36).slice(2)),
+    date:String(e.date||"").slice(0,10),
+    rating:Math.min(5,Math.max(1,Number(e.rating)||3)),
+    mood:moods.includes(e.mood)?e.mood:"普通",
+    text:String(e.text||"").trim(),
+    checks:Array.isArray(e.checks)?e.checks.filter(Boolean):[],
+    updatedAt:Number(e.updatedAt)||Date.now()
+  })).filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&e.text)
+}
+function addImported(entries){
+  const current=loadEntries();const fingerprints=new Set(current.map(makeFingerprint));let added=0,skipped=0;
+  entries.forEach(e=>{const fp=makeFingerprint(e);if(fingerprints.has(fp)){skipped++;return}current.push(e);fingerprints.add(fp);added++});
+  current.sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt-a.updatedAt);saveEntries(current);renderEntries();renderCalendar();return{added,skipped}
+}
+function parseImportText(){const raw=JSON.parse($("importText").value.trim());return normalizeImported(raw)}
+$("previewImportBtn").onclick=()=>{try{const e=parseImportText();$("importStatus").textContent=`読み込み可能: ${e.length}件。追加ボタンを押すと、既存の日記を残したまま取り込みます。`}catch(err){$("importStatus").textContent="読み込めません。JSON形式を確認してください。"}}
+$("runImportBtn").onclick=()=>{try{const r=addImported(parseImportText());$("importStatus").textContent=`追加 ${r.added}件、重複スキップ ${r.skipped}件。`;if(r.added)$("importText").value=""}catch(err){$("importStatus").textContent="読み込めません。JSON形式を確認してください。"}}
+
+function exportData(){const payload={app:"Secret Garden",version:2,exportedAt:new Date().toISOString(),entries:loadEntries()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`secret-garden-backup-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
+function importFile(file){const r=new FileReader();r.onload=()=>{try{const entries=normalizeImported(JSON.parse(r.result));const result=addImported(entries);alert(`追加 ${result.added}件、重複スキップ ${result.skipped}件。`)}catch{alert("読み込めないファイルです。")}};r.readAsText(file)}
+
+function renderCalendar(){
+  const month=$("monthPicker").value||today().slice(0,7);$("monthPicker").value=month;
+  const [y,m]=month.split("-").map(Number),first=new Date(y,m-1,1),last=new Date(y,m,0),start=first.getDay();
+  const entries=loadEntries(),byDate=new Map(entries.map(e=>[e.date,e]));
+  const heads=["日","月","火","水","木","金","土"];$("calendar").innerHTML=heads.map(h=>`<div class="cal-head">${h}</div>`).join("");
+  for(let i=0;i<start;i++)$("calendar").insertAdjacentHTML("beforeend",'<div class="cal-day empty"></div>');
+  for(let d=1;d<=last.getDate();d++){const ds=`${month}-${String(d).padStart(2,"0")}`,e=byDate.get(ds);const b=document.createElement("button");b.className="cal-day"+(e?" has":"");b.textContent=d;if(e)b.onclick=()=>editEntry(e.id);$("calendar").appendChild(b)}
+}
+function switchTab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));["write","calendar","import"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar()}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+
+$("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;
+$("importFileBtn").onclick=()=>$("fileInput").click();$("fileInput").onchange=e=>{const f=e.target.files[0];if(f)importFile(f);e.target.value=""};$("monthPicker").onchange=renderCalendar;
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}
 initGate();
 </script>

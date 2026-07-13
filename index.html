@@ -661,9 +661,7 @@ const LEONA_KEY="secret_garden_leona_diaries_v1";
 function loadCharacterDiaries(key){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
 function saveCharacterDiaries(key,value){localStorage.setItem(key,JSON.stringify(value))}
 function characterSource(date){
-  return loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt).map(e=>e.text).join("
-
-");
+  return loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt).map(e=>e.text).join("\n\n");
 }
 function availableDiaryDates(){
   return [...new Set(loadEntries().map(e=>e.date))].sort();

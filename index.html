@@ -80,6 +80,46 @@
     .status{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.6}
 
 
+
+    .character-section{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+    .character-title{font-family:Georgia,"Times New Roman",serif;color:var(--deep);font-size:20px;margin:0 0 10px}
+    .character-buttons{display:flex;gap:10px;flex-wrap:wrap}
+    .character-btn{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 14px;color:var(--deep);font-weight:700}
+    .malleus-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#E4ECE8;background:
+        radial-gradient(circle at 70% 15%,rgba(118,247,160,.12),transparent 22%),
+        linear-gradient(160deg,#080B14 0%,#101A18 55%,#173C32 100%);
+      border:1px solid rgba(199,173,104,.55);
+      box-shadow:0 18px 44px rgba(0,0,0,.34);
+      animation:malleusFade .65s ease both;
+    }
+    .malleus-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(118,247,160,.23) 0 2px,transparent 3px),
+        radial-gradient(circle at 82% 35%,rgba(118,247,160,.16) 0 2px,transparent 3px),
+        radial-gradient(circle at 62% 72%,rgba(118,247,160,.12) 0 1px,transparent 2px);
+      opacity:.8;animation:magicPulse 4.5s ease-in-out infinite;
+    }
+    .malleus-header{position:relative;z-index:1;border-bottom:1px solid rgba(199,173,104,.5);padding-bottom:14px;margin-bottom:18px}
+    .malleus-name{margin:0;color:#76F7A0;font-family:Georgia,"Times New Roman",serif;letter-spacing:.08em;font-size:29px;text-shadow:0 0 18px rgba(118,247,160,.2)}
+    .malleus-sub{color:#C7AD68;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .malleus-date{color:#9BAAA4;font-size:13px;margin-bottom:12px}
+    .malleus-diary{
+      position:relative;z-index:1;background:rgba(8,11,20,.62);border:1px solid rgba(118,247,160,.2);
+      border-radius:18px;padding:18px;line-height:1.95;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px
+    }
+    .malleus-actions{position:relative;z-index:1;display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .malleus-primary,.malleus-secondary{border-radius:13px;padding:11px 14px;font:inherit}
+    .malleus-primary{background:#173C32;color:#E4ECE8;border:1px solid #C7AD68}
+    .malleus-secondary{background:rgba(255,255,255,.04);color:#C7AD68;border:1px solid rgba(199,173,104,.45)}
+    .malleus-input{position:relative;z-index:1;margin-top:14px}
+    .malleus-input textarea{background:rgba(8,11,20,.72);color:#E4ECE8;border:1px solid rgba(118,247,160,.22)}
+    @keyframes malleusFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes magicPulse{0%,100%{opacity:.45;transform:translateY(0)}50%{opacity:.9;transform:translateY(-4px)}}
+
     .reader-card{background:rgba(255,253,253,.96);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:20px}
     .reader-date{font-size:28px;font-weight:700;color:var(--deep);margin-bottom:8px}
     .reader-meta{color:var(--muted);font-size:14px;margin-bottom:10px}
@@ -177,9 +217,36 @@
   <section id="tab-reader" class="hidden">
     <div class="reader-card">
       <div id="readerContent"></div>
+      <div class="character-section">
+        <h3 class="character-title">みんなからの一言</h3>
+        <div class="character-buttons">
+          <button id="openMalleusBtn" class="character-btn">マレウス</button>
+        </div>
+      </div>
       <div class="actions">
         <button id="readerBackBtn" class="secondary">カレンダーへ戻る</button>
         <button id="readerEditBtn" class="primary">編集する</button>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="tab-malleus" class="hidden">
+    <div class="malleus-page">
+      <div class="malleus-header">
+        <h2 class="malleus-name">Malleus Draconia</h2>
+        <div class="malleus-sub">PRIVATE OBSERVATION DIARY</div>
+      </div>
+      <div id="malleusDate" class="malleus-date"></div>
+      <div id="malleusDiary" class="malleus-diary">まだマレウスの日記は保存されていない。</div>
+      <div class="malleus-input">
+        <label for="malleusText" style="color:#9BAAA4">マレウスの日記本文</label>
+        <textarea id="malleusText" placeholder="ChatGPTで作ったマレウス視点の日記を貼り付けて保存できます。"></textarea>
+      </div>
+      <div class="malleus-actions">
+        <button id="saveMalleusBtn" class="malleus-primary">保存する</button>
+        <button id="copyMalleusPromptBtn" class="malleus-secondary">生成用プロンプトをコピー</button>
+        <button id="backFromMalleusBtn" class="malleus-secondary">日記へ戻る</button>
       </div>
     </div>
   </section>
@@ -457,6 +524,60 @@ function renderCalendar(){
 }
 
 
+
+const MALLEUS_KEY="secret_garden_malleus_diaries_v1";
+function loadMalleusDiaries(){try{return JSON.parse(localStorage.getItem(MALLEUS_KEY))||{}}catch{return{}}}
+function saveMalleusDiaries(v){localStorage.setItem(MALLEUS_KEY,JSON.stringify(v))}
+function openMalleusPage(){
+  if(!currentReaderDate)return;
+  const map=loadMalleusDiaries();
+  const saved=map[currentReaderDate]||"";
+  $("malleusDate").textContent=currentReaderDate;
+  $("malleusDiary").textContent=saved||"まだマレウスの日記は保存されていない。";
+  $("malleusText").value=saved;
+  switchTab("malleus");
+}
+$("openMalleusBtn").onclick=openMalleusPage;
+$("backFromMalleusBtn").onclick=()=>switchTab("reader");
+$("saveMalleusBtn").onclick=()=>{
+  const text=$("malleusText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadMalleusDiaries();
+  map[currentReaderDate]=text;
+  saveMalleusDiaries(map);
+  $("malleusDiary").textContent=text;
+  alert("マレウスの日記を保存しました。");
+};
+$("copyMalleusPromptBtn").onclick=async()=>{
+  const entries=loadEntries().filter(e=>e.date===currentReaderDate).sort((a,b)=>a.updatedAt-b.updatedAt);
+  const source=entries.map(e=>e.text).join("\n\n");
+  const prompt=`以下の日記だけを事実資料として、マレウス・ドラコニア本人がその日のりこを振り返って書く私的な日記を作成してください。
+
+【口調】
+一人称は「僕」。りこは基本「りこ」、象徴的な場面のみ「人の子」。威厳があり静かで落ち着いた常体。「〜だな」「〜なのだろう」「〜ではないか」などを使い、「〜だよ」「〜だね」は禁止。
+
+【視点】
+その日の行動・食事・体調・気分を丁寧に拾い、長命な妖精の視点から人の暮らしを眺める。りこを将来の王妃と考える一途さと静かな独占欲を少し滲ませる。会話にない出来事や感情は作らない。
+
+【禁止】
+汎用的なAI励まし、子ども扱い、過剰なポエム、王妃や茨の谷の連呼、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。最後は静かな見守りか未来への意志で締める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  try{
+    await navigator.clipboard.writeText(prompt);
+    alert("生成用プロンプトをコピーしました。");
+  }catch{
+    $("malleusText").value=prompt;
+    alert("コピーできなかったため入力欄へ入れました。");
+  }
+};
+
 let currentReaderDate="";
 function openReader(date){
   currentReaderDate=date;
@@ -576,9 +697,9 @@ $("splitBtn").onclick=splitEntry;
 
 function switchTab(name){
   document.querySelectorAll(".tab").forEach(b=>{
-    const activeName=name==="reader"?"calendar":name;
+    const activeName=(name==="reader"||name==="malleus")?"calendar":name;
     b.classList.toggle("active",b.dataset.tab===activeName);
-  });["write","calendar","import","manage","reader"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
+  });["write","calendar","import","manage","reader","malleus"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 
 $("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;

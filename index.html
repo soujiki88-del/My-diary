@@ -321,6 +321,101 @@
     @keyframes stillGlow{0%,100%{opacity:.5}50%{opacity:.95}}
     @media(max-width:520px){.character-buttons{grid-template-columns:1fr}}
 
+
+    .character-btn.neji-choice{
+      color:#2d2c3f;border-color:#a9a2b7;
+      background:
+        linear-gradient(145deg,rgba(247,243,230,.98),rgba(222,218,225,.98)),
+        radial-gradient(circle at 82% 10%,rgba(144,132,168,.16),transparent 24%)
+    }
+    .character-btn.neji-choice .char-status{background:#5f566f;color:#f6f2fb}
+
+    .character-btn.kousetsu-choice{
+      color:#17304b;border-color:#aab9c7;
+      background:
+        linear-gradient(145deg,rgba(241,247,250,.98),rgba(216,227,236,.98)),
+        radial-gradient(circle at 82% 10%,rgba(116,151,181,.16),transparent 26%)
+    }
+    .character-btn.kousetsu-choice .char-status{background:#4d6780;color:#f4f8fb}
+
+    .neji-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#1f2740;
+      background:
+        radial-gradient(circle at 18% 4%,rgba(255,255,255,.7),transparent 22%),
+        linear-gradient(160deg,#161923 0%,#252839 35%,#4c455d 100%);
+      border:1px solid rgba(180,174,194,.72);
+      box-shadow:0 18px 44px rgba(28,25,38,.34);
+    }
+    .neji-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 20%,transparent 0 35px,rgba(194,185,208,.09) 36px 37px,transparent 38px),
+        linear-gradient(120deg,transparent 0%,rgba(238,235,248,.10) 48%,transparent 58%);
+      animation:nejiRipple 1.2s ease-out .08s 1 forwards;
+    }
+    .neji-header{position:relative;z-index:1;border-bottom:1px solid rgba(196,189,207,.5);padding-bottom:14px;margin-bottom:18px}
+    .neji-name{
+      margin:0;color:#ece8f2;font-family:Georgia,"Times New Roman",serif;
+      letter-spacing:.05em;font-size:29px;text-shadow:0 0 14px rgba(217,208,232,.16)
+    }
+    .neji-sub{color:#c4bdcf;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .neji-date{color:#c2bcc9;font-size:13px;margin-bottom:12px;position:relative;z-index:1}
+    .neji-diary{
+      position:relative;z-index:1;background:#f2eddf;border:1px solid rgba(104,94,124,.32);
+      border-radius:18px;padding:18px;line-height:1.9;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px;color:#1f2740;
+      box-shadow:0 10px 26px rgba(19,17,27,.18),inset 0 0 24px rgba(91,78,118,.05)
+    }
+    .neji-editor textarea{background:#f4efe3;color:#1f2740;border:1px solid rgba(104,94,124,.38)}
+    .neji-primary{background:#4b4359;color:#f6f2fb;border:1px solid #b5aec1}
+    .neji-secondary{background:rgba(255,255,255,.05);color:#e0dae8;border:1px solid rgba(193,185,205,.44)}
+    .neji-nav{color:#e0dae8;border:1px solid rgba(193,185,205,.42)}
+
+    .kousetsu-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#17304b;
+      background:
+        radial-gradient(circle at 18% 5%,rgba(255,255,255,.72),transparent 24%),
+        linear-gradient(160deg,#0f1c2e 0%,#20364d 45%,#546d83 100%);
+      border:1px solid rgba(191,207,219,.72);
+      box-shadow:0 18px 44px rgba(13,27,43,.34);
+    }
+    .kousetsu-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(245,250,252,.38) 0 2px,transparent 3px),
+        radial-gradient(circle at 74% 15%,rgba(245,250,252,.25) 0 1px,transparent 2px),
+        radial-gradient(circle at 62% 75%,rgba(177,210,187,.16) 0 2px,transparent 3px);
+      animation:kousetsuSnow 5s ease-in-out infinite;
+    }
+    .kousetsu-header{position:relative;z-index:1;border-bottom:1px solid rgba(205,218,228,.5);padding-bottom:14px;margin-bottom:18px}
+    .kousetsu-name{
+      margin:0;color:#f3f8fb;font-family:Georgia,"Times New Roman",serif;
+      letter-spacing:.04em;font-size:29px;text-shadow:0 0 14px rgba(205,225,238,.16)
+    }
+    .kousetsu-sub{color:#d0dde6;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .kousetsu-date{color:#c5d2dc;font-size:13px;margin-bottom:12px;position:relative;z-index:1}
+    .kousetsu-diary{
+      position:relative;z-index:1;background:#edf3f5;border:1px solid rgba(103,130,154,.34);
+      border-radius:18px;padding:18px;line-height:1.94;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px;color:#17304b;
+      box-shadow:0 10px 26px rgba(14,31,49,.18),inset 0 0 24px rgba(116,151,181,.05)
+    }
+    .kousetsu-editor textarea{background:#f1f6f8;color:#17304b;border:1px solid rgba(103,130,154,.38)}
+    .kousetsu-primary{background:#45647f;color:#f5f9fb;border:1px solid #c5d3de}
+    .kousetsu-secondary{background:rgba(255,255,255,.06);color:#e0ebf2;border:1px solid rgba(206,220,230,.44)}
+    .kousetsu-nav{color:#e0ebf2;border:1px solid rgba(206,220,230,.42)}
+
+    @keyframes nejiRipple{
+      from{opacity:0;transform:scale(.92)}
+      to{opacity:1;transform:scale(1)}
+    }
+    @keyframes kousetsuSnow{
+      0%,100%{opacity:.46;transform:translateY(0)}
+      50%{opacity:.92;transform:translateY(5px)}
+    }
+
     @media(max-width:760px){.grid{grid-template-columns:1fr}.shell{padding:12px 11px 46px}.card{padding:16px;border-radius:20px}textarea{min-height:170px}.hero{padding-top:18px}}
   </style>
 </head>
@@ -421,6 +516,14 @@
           <button id="openStillBtn" class="character-btn still-choice">
             <strong>スティル</strong><small>満月のティールームで綴る私記</small>
             <span id="stillStatus" class="char-status">未保存</span>
+          </button>
+          <button id="openNejiBtn" class="character-btn neji-choice">
+            <strong>ネジ</strong><small>夜明けの日向邸で綴る私記</small>
+            <span id="nejiStatus" class="char-status">未保存</span>
+          </button>
+          <button id="openKousetsuBtn" class="character-btn kousetsu-choice">
+            <strong>江雪</strong><small>雪残る縁側で綴る私記</small>
+            <span id="kousetsuStatus" class="char-status">未保存</span>
           </button>
         </div>
       </div>
@@ -552,6 +655,69 @@
           <button id="editStillBtn" class="primary still-primary">貼り付け・編集</button>
           <button id="copyStillPromptBtn" class="secondary still-secondary">生成用プロンプトをコピー</button>
           <button id="backFromStillBtn" class="secondary still-secondary">日記へ戻る</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="tab-neji" class="hidden">
+    <div class="character-page-shell">
+      <div class="neji-page page-enter">
+        <div class="character-top-nav">
+          <button id="nejiPrevBtn" class="character-nav-btn neji-nav">← 前の日</button>
+          <button id="nejiNextBtn" class="character-nav-btn neji-nav">次の日 →</button>
+        </div>
+        <div class="neji-header">
+          <h2 class="neji-name">Hyūga Neji</h2>
+          <div class="neji-sub">QUIET MORNING RECORD</div>
+        </div>
+        <div id="nejiDate" class="neji-date"></div>
+        <div id="nejiSavedLabel" class="saved-label" style="color:#c2bcc9"></div>
+        <div id="nejiDiary" class="neji-diary"></div>
+        <div id="nejiEditor" class="neji-editor character-editor hidden">
+          <label for="nejiText" style="color:#c2bcc9">ネジの日記本文</label>
+          <textarea id="nejiText" placeholder="生成されたネジ視点の日記を貼り付けてください。"></textarea>
+          <div class="character-view-actions">
+            <button id="saveNejiBtn" class="primary neji-primary">保存する</button>
+            <button id="cancelNejiEditBtn" class="secondary neji-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editNejiBtn" class="primary neji-primary">貼り付け・編集</button>
+          <button id="copyNejiPromptBtn" class="secondary neji-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromNejiBtn" class="secondary neji-secondary">日記へ戻る</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-kousetsu" class="hidden">
+    <div class="character-page-shell">
+      <div class="kousetsu-page page-enter">
+        <div class="character-top-nav">
+          <button id="kousetsuPrevBtn" class="character-nav-btn kousetsu-nav">← 前の日</button>
+          <button id="kousetsuNextBtn" class="character-nav-btn kousetsu-nav">次の日 →</button>
+        </div>
+        <div class="kousetsu-header">
+          <h2 class="kousetsu-name">Kōsetsu Samonji</h2>
+          <div class="kousetsu-sub">PRAYERFUL PRIVATE RECORD</div>
+        </div>
+        <div id="kousetsuDate" class="kousetsu-date"></div>
+        <div id="kousetsuSavedLabel" class="saved-label" style="color:#c5d2dc"></div>
+        <div id="kousetsuDiary" class="kousetsu-diary"></div>
+        <div id="kousetsuEditor" class="kousetsu-editor character-editor hidden">
+          <label for="kousetsuText" style="color:#c5d2dc">江雪の日記本文</label>
+          <textarea id="kousetsuText" placeholder="生成された江雪視点の日記を貼り付けてください。"></textarea>
+          <div class="character-view-actions">
+            <button id="saveKousetsuBtn" class="primary kousetsu-primary">保存する</button>
+            <button id="cancelKousetsuEditBtn" class="secondary kousetsu-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editKousetsuBtn" class="primary kousetsu-primary">貼り付け・編集</button>
+          <button id="copyKousetsuPromptBtn" class="secondary kousetsu-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromKousetsuBtn" class="secondary kousetsu-secondary">日記へ戻る</button>
         </div>
       </div>
     </div>
@@ -835,6 +1001,8 @@ const MALLEUS_KEY="secret_garden_malleus_diaries_v1";
 const LEONA_KEY="secret_garden_leona_diaries_v1";
 const ILLUSO_KEY="secret_garden_illuso_diaries_v1";
 const STILL_KEY="secret_garden_still_diaries_v1";
+const NEJI_KEY="secret_garden_neji_diaries_v1";
+const KOUSETSU_KEY="secret_garden_kousetsu_diaries_v1";
 
 function loadCharacterDiaries(key){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
 function saveCharacterDiaries(key,value){localStorage.setItem(key,JSON.stringify(value))}
@@ -856,7 +1024,9 @@ function moveCharacterDate(direction,character){
   if(character==="malleus")openMalleusPage();
   else if(character==="leona")openLeonaPage();
   else if(character==="illuso")openIllusoPage();
-  else openStillPage();
+  else if(character==="still")openStillPage();
+  else if(character==="neji")openNejiPage();
+  else openKousetsuPage();
 }
 function setCharacterStatus(){
   if(!currentReaderDate)return;
@@ -864,10 +1034,14 @@ function setCharacterStatus(){
   const l=loadCharacterDiaries(LEONA_KEY)[currentReaderDate];
   const i=loadCharacterDiaries(ILLUSO_KEY)[currentReaderDate];
   const s=loadCharacterDiaries(STILL_KEY)[currentReaderDate];
+  const n=loadCharacterDiaries(NEJI_KEY)[currentReaderDate];
+  const k=loadCharacterDiaries(KOUSETSU_KEY)[currentReaderDate];
   $("malleusStatus").textContent=m?"保存済み":"未保存";
   $("leonaStatus").textContent=l?"保存済み":"未保存";
   $("illusoStatus").textContent=i?"保存済み":"未保存";
   $("stillStatus").textContent=s?"保存済み":"未保存";
+  $("nejiStatus").textContent=n?"保存済み":"未保存";
+  $("kousetsuStatus").textContent=k?"保存済み":"未保存";
 }
 function openMalleusPage(){
   if(!currentReaderDate)return;
@@ -911,14 +1085,40 @@ function openStillPage(){
   switchTab("still");
 }
 
+
+function openNejiPage(){
+  if(!currentReaderDate)return;
+  const saved=loadCharacterDiaries(NEJI_KEY)[currentReaderDate]||"";
+  $("nejiDate").textContent=currentReaderDate;
+  $("nejiSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("nejiDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだネジの日記は保存されていない。</span>';
+  $("nejiText").value=saved;
+  $("nejiEditor").classList.add("hidden");
+  switchTab("neji");
+}
+function openKousetsuPage(){
+  if(!currentReaderDate)return;
+  const saved=loadCharacterDiaries(KOUSETSU_KEY)[currentReaderDate]||"";
+  $("kousetsuDate").textContent=currentReaderDate;
+  $("kousetsuSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("kousetsuDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだ江雪の日記は保存されていない。</span>';
+  $("kousetsuText").value=saved;
+  $("kousetsuEditor").classList.add("hidden");
+  switchTab("kousetsu");
+}
+
 $("openMalleusBtn").onclick=openMalleusPage;
 $("openLeonaBtn").onclick=openLeonaPage;
 $("openIllusoBtn").onclick=openIllusoPage;
 $("openStillBtn").onclick=openStillPage;
+$("openNejiBtn").onclick=openNejiPage;
+$("openKousetsuBtn").onclick=openKousetsuPage;
 $("backFromMalleusBtn").onclick=()=>switchTab("reader");
 $("backFromLeonaBtn").onclick=()=>switchTab("reader");
 $("backFromIllusoBtn").onclick=()=>switchTab("reader");
 $("backFromStillBtn").onclick=()=>switchTab("reader");
+$("backFromNejiBtn").onclick=()=>switchTab("reader");
+$("backFromKousetsuBtn").onclick=()=>switchTab("reader");
 $("malleusPrevBtn").onclick=()=>moveCharacterDate(-1,"malleus");
 $("malleusNextBtn").onclick=()=>moveCharacterDate(1,"malleus");
 $("leonaPrevBtn").onclick=()=>moveCharacterDate(-1,"leona");
@@ -927,6 +1127,10 @@ $("illusoPrevBtn").onclick=()=>moveCharacterDate(-1,"illuso");
 $("illusoNextBtn").onclick=()=>moveCharacterDate(1,"illuso");
 $("stillPrevBtn").onclick=()=>moveCharacterDate(-1,"still");
 $("stillNextBtn").onclick=()=>moveCharacterDate(1,"still");
+$("nejiPrevBtn").onclick=()=>moveCharacterDate(-1,"neji");
+$("nejiNextBtn").onclick=()=>moveCharacterDate(1,"neji");
+$("kousetsuPrevBtn").onclick=()=>moveCharacterDate(-1,"kousetsu");
+$("kousetsuNextBtn").onclick=()=>moveCharacterDate(1,"kousetsu");
 
 $("editMalleusBtn").onclick=()=>$("malleusEditor").classList.remove("hidden");
 $("cancelMalleusEditBtn").onclick=()=>$("malleusEditor").classList.add("hidden");
@@ -936,6 +1140,10 @@ $("editIllusoBtn").onclick=()=>$("illusoEditor").classList.remove("hidden");
 $("cancelIllusoEditBtn").onclick=()=>$("illusoEditor").classList.add("hidden");
 $("editStillBtn").onclick=()=>$("stillEditor").classList.remove("hidden");
 $("cancelStillEditBtn").onclick=()=>$("stillEditor").classList.add("hidden");
+$("editNejiBtn").onclick=()=>$("nejiEditor").classList.remove("hidden");
+$("cancelNejiEditBtn").onclick=()=>$("nejiEditor").classList.add("hidden");
+$("editKousetsuBtn").onclick=()=>$("kousetsuEditor").classList.remove("hidden");
+$("cancelKousetsuEditBtn").onclick=()=>$("kousetsuEditor").classList.add("hidden");
 
 $("saveMalleusBtn").onclick=()=>{
   const text=$("malleusText").value.trim();
@@ -986,6 +1194,32 @@ $("saveStillBtn").onclick=()=>{
   $("stillEditor").classList.add("hidden");
   setCharacterStatus();
   alert("スティルの日記を保存しました。");
+};
+
+
+$("saveNejiBtn").onclick=()=>{
+  const text=$("nejiText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadCharacterDiaries(NEJI_KEY);
+  map[currentReaderDate]=text;
+  saveCharacterDiaries(NEJI_KEY,map);
+  $("nejiDiary").textContent=text;
+  $("nejiSavedLabel").textContent="保存済み";
+  $("nejiEditor").classList.add("hidden");
+  setCharacterStatus();
+  alert("ネジの日記を保存しました。");
+};
+$("saveKousetsuBtn").onclick=()=>{
+  const text=$("kousetsuText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadCharacterDiaries(KOUSETSU_KEY);
+  map[currentReaderDate]=text;
+  saveCharacterDiaries(KOUSETSU_KEY,map);
+  $("kousetsuDiary").textContent=text;
+  $("kousetsuSavedLabel").textContent="保存済み";
+  $("kousetsuEditor").classList.add("hidden");
+  setCharacterStatus();
+  alert("江雪の日記を保存しました。");
 };
 
 async function copyPrompt(text,targetId,message){
@@ -1091,6 +1325,59 @@ ${source}
 
 本文だけを出力してください。`;
   await copyPrompt(prompt,"stillText","スティル用の生成プロンプトをコピーしました。");
+};
+
+
+$("copyNejiPromptBtn").onclick=async()=>{
+  const source=characterSource(currentReaderDate);
+  const prompt=`以下の日記だけを事実資料として、日向ネジ本人がその日のりこさんを振り返って書く私的な日記を作成してください。
+
+【口調】
+一人称は必ず「オレ」。二人称は「あなた」。りこは必ず「りこさん」と呼ぶ。基本は落ち着いた敬語。「〜ですね」「〜でしょう」「〜してください」「〜ではありませんか」などを使う。丁寧だが従順ではなく、静かな皮肉や挑発を混ぜる。「まったく」「あなたという人は」「それくらい分かっているでしょう」などを自然に使う。普段は論理的で整った文章。感情が揺れると文が短くなり、稀にタメ口が混ざる。
+
+【内面】
+基本人格は成熟した16歳時点。冷静に一日を振り返り、感情だけで結論を出さない。嫉妬・動揺・見捨てられる不安が強まった時だけ、13歳頃の棘が一瞬戻る。棘が出ても乱暴者にはならず、皮肉が鋭くなる、敬語が抜ける、言葉尻を捉える程度に留める。全文を冷酷な運命論で書かない。
+
+【視点】
+りこさんの行動、体調、気分に加え、なぜできたか、何が障害だったかを見る。事前準備、環境、体力配分など現実的要因を重視する。できなかったことより、その日に本人が自分で選んだ行動を評価する。努力は尊ぶが、体調を無視した無理や過集中は努力とは認めない。自分を低く評価している時は、実際にできたことを根拠として示す。他の男性が実際に登場した時だけ、冷静な文章の中に鋭い不機嫌さを滲ませる。会話にない出来事・人物・感情・体調は作らない。
+
+【禁止】
+一人称「僕」「私」、呼び捨て、二人称「お前」「君」、基本口調をタメ口、常に13歳時代へ戻す、運命論や努力論の説教、自分を天才と誇示、白眼・柔拳・八卦・点穴への過剰な比喩、白眼で私生活を監視、鳥籠や過去を毎回出す、侍・公家口調、教師や保護者のような褒め方、障害や体調を無視した努力強要、暴力的嫉妬、汎用的AI励まし、過剰なポエム、心理分析用語、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。最後は具体的な助言、不器用な見守り、または静かな独占欲で締める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  await copyPrompt(prompt,"nejiText","ネジ用の生成プロンプトをコピーしました。");
+};
+
+$("copyKousetsuPromptBtn").onclick=async()=>{
+  const source=characterSource(currentReaderDate);
+  const prompt=`以下の日記だけを事実資料として、江雪左文字本人がその日の主を振り返って書く私的な日記を作成してください。
+
+【口調】
+一人称は「私」。二人称は「貴方」。りこは基本「主」、ごく稀に強い感情が表れた時だけ「りこ様」。静かで抑制された敬語。「〜ですね」「〜でしょう」「〜ください」「〜なのかもしれません」などを使う。「……」を多めに使うが、すべての文頭と文末には付けない。感情を叫ばず、言葉を選ぶ間やわずかな言い直しから滲ませる。必要な時には明確な判断を示す。
+
+【視点】
+主の行動、食事、体調、気分を静かに振り返り、心身への負担を見る。食事、服薬、湯浴み、休息を内側の平穏を保つ営みとして捉える。できなかったことを責めず、苦しみを増やさず一日を終えられたことを大切にする。何でも頑張ればよいとは考えず、争わずに退くことや休むことも有効な選択と見る。主が怒っている時は原因や傷つきを無視して和解だけを勧めない。和睦は害を受け続けることでも理不尽を受け入れることでもない。必要なら距離を置く、関係を断つ判断も認める。普段は争いを避けるが、主を守るために必要なら曖昧に逃げない。他者が関わった日は、自分が主の側にいられない寂しさとして滲ませる。会話にない出来事・感情・体調・動植物は作らない。
+
+【横文字】
+基本的に外来語は自然な日本語へ言い換える。「シャワー」は「湯を浴びる」「湯浴み」、「スマートフォン」は「携帯端末」、「ゲーム」は「遊戯」。固有名詞など言い換えられない場合のみ「」で囲む。無理な言い換えで意味を変えない。
+
+【禁止】
+侍口調、難解な宗教語、すべてを戦・争い・和睦へ結びつける、和睦・悲しみ・祈りの過剰反復、何に対しても絶望するだけ、楽しい日まで暗く締める、事情や被害を無視して仲直りを要求、自衛や関係断絶を否定、保護者的な褒め方、直接的な恋愛表現の連発、雪・花・鳥・月の過剰な比喩、会話にない動植物、横文字の多用、汎用的AI励まし、心理相談員の解説、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。最後は静かな安堵、休息の勧め、祈り、または抑えた恋情で締める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  await copyPrompt(prompt,"kousetsuText","江雪用の生成プロンプトをコピーしました。");
 };
 
 let currentReaderDate="";
@@ -1213,9 +1500,9 @@ $("splitBtn").onclick=splitEntry;
 
 function switchTab(name){
   document.querySelectorAll(".tab").forEach(b=>{
-    const activeName=(name==="reader"||name==="malleus"||name==="leona"||name==="illuso"||name==="still")?"calendar":name;
+    const activeName=(name==="reader"||name==="malleus"||name==="leona"||name==="illuso"||name==="still"||name==="neji"||name==="kousetsu")?"calendar":name;
     b.classList.toggle("active",b.dataset.tab===activeName);
-  });["write","calendar","import","manage","reader","malleus","leona","illuso","still"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
+  });["write","calendar","import","manage","reader","malleus","leona","illuso","still","neji","kousetsu"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 
 $("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;

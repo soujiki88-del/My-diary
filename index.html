@@ -148,8 +148,8 @@
   <section id="tab-import" class="hidden">
     <div class="card">
       <h2>ChatGPT Diary Import</h2><div class="ornament"></div>
-      <p class="note">ChatGPTから受け取ったJSONをそのまま貼り付けてください。既存の日記は消さず、新しい分だけ追加します。</p>
-      <textarea id="importText" class="importbox" placeholder='{"entries":[{"date":"2026-07-13","rating":5,"mood":"嬉しい","text":"Secret Gardenを作った。","checks":["外出"]}]}'></textarea>
+      <p class="note">ChatGPTから受け取ったJSONをそのまま貼り付けてください。配列・mood複数・本文の別名にも対応します。既存の日記は消しません。</p>
+      <textarea id="importText" class="importbox" placeholder='[{"date":"2026-07-13","rating":5,"mood":["嬉しい","達成感"],"summary":"Secret Gardenを作った。","checks":["外出"]}]'></textarea>
       <div class="actions"><button id="previewImportBtn" class="secondary">確認する</button><button id="runImportBtn" class="primary">追加する</button></div>
       <div id="importStatus" class="status"></div>
     </div>
@@ -222,16 +222,118 @@ function editEntry(id){const e=loadEntries().find(x=>x.id===id);if(!e)return;edi
 function deleteEntry(id){if(!confirm("この日記を削除しますか？"))return;saveEntries(loadEntries().filter(e=>e.id!==id));if(editingId===id)resetForm();renderEntries();renderCalendar()}
 
 function normalizeImported(raw){
-  const arr=Array.isArray(raw)?raw:raw.entries;if(!Array.isArray(arr))throw new Error("entriesがありません");
-  return arr.map(e=>({
-    id:e.id||(Date.now().toString(36)+Math.random().toString(36).slice(2)),
-    date:String(e.date||"").slice(0,10),
-    rating:Math.min(5,Math.max(1,Number(e.rating)||3)),
-    mood:moods.includes(e.mood)?e.mood:"普通",
-    text:String(e.text||"").trim(),
-    checks:Array.isArray(e.checks)?e.checks.filter(Boolean):[],
-    updatedAt:Number(e.updatedAt)||Date.now()
-  })).filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&e.text)
+  const arr=
+    Array.isArray(raw) ? raw :
+    Array.isArray(raw?.entries) ? raw.entries :
+    Array.isArray(raw?.diaries) ? raw.diaries :
+    Array.isArray(raw?.items) ? raw.items :
+    Array.isArray(raw?.data) ? raw.data :
+    null;
+
+  if(!Array.isArray(arr)) throw new Error("日記データが見つかりません");
+
+  const aliases = {
+    "入浴":"シャワー",
+    "風呂":"シャワー",
+    "お風呂":"シャワー",
+    "病院":"通院",
+    "受診":"通院",
+    "薬":"服薬",
+    "投薬":"服薬",
+    "外出した":"外出"
+  };
+
+  function normalizeDate(value){
+    const s=String(value||"").trim()
+      .replace(/[./]/g,"-")
+      .replace(/年/g,"-")
+      .replace(/月/g,"-")
+      .replace(/日/g,"");
+    const m=s.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if(!m) return "";
+    return `${m[1]}-${String(m[2]).padStart(2,"0")}-${String(m[3]).padStart(2,"0")}`;
+  }
+
+  function chooseMood(value){
+    const values=Array.isArray(value)?value:[value];
+    const flat=values.filter(Boolean).map(String);
+    const preferred=flat.find(v=>moods.includes(v));
+    if(preferred) return preferred;
+
+    const joined=flat.join(" ");
+    if(/嬉|楽|達成|満足|喜/.test(joined)) return "嬉しい";
+    if(/穏|平和|落ち着/.test(joined)) return "穏やか";
+    if(/疲|消耗/.test(joined)) return "疲れた";
+    if(/しんど|不調|つら|辛/.test(joined)) return "しんどい";
+    if(/怒|苛立|イライラ/.test(joined)) return "怒り";
+    if(/不安|心配|怖/.test(joined)) return "不安";
+    if(/眠/.test(joined)) return "眠い";
+    return "普通";
+  }
+
+  function collectChecks(e){
+    const rawChecks=[
+      ...(Array.isArray(e.checks)?e.checks:[]),
+      ...(Array.isArray(e.check_items)?e.check_items:[]),
+      ...(Array.isArray(e.tags)?e.tags:[])
+    ].filter(Boolean).map(String);
+
+    const flags={
+      "シャワー":e.shower,
+      "洗濯":e.laundry,
+      "頭痛":e.headache,
+      "通院":e.hospital||e.visit,
+      "服薬":e.medication||e.medicine,
+      "外出":e.outing
+    };
+    Object.entries(flags).forEach(([k,v])=>{if(v===true||v==="true"||v===1)rawChecks.push(k)});
+
+    return [...new Set(rawChecks.map(v=>aliases[v]||v).filter(v=>["シャワー","洗濯","頭痛","通院","服薬","外出"].includes(v)))];
+  }
+
+  function buildText(e){
+    const direct=[
+      e.text,e.body,e.content,e.diary,e.summary,e.note,e.notes,e.entry,e.description
+    ].find(v=>typeof v==="string"&&v.trim());
+    if(direct) return direct.trim();
+
+    const parts=[];
+    const labels=[
+      ["出来事",e.events],
+      ["行動",e.actions],
+      ["食事",e.meals||e.food],
+      ["体調",e.condition||e.health],
+      ["気分",e.mood],
+      ["メモ",e.memo]
+    ];
+    labels.forEach(([label,value])=>{
+      if(Array.isArray(value)&&value.length)parts.push(`${label}: ${value.join("、")}`);
+      else if(typeof value==="string"&&value.trim())parts.push(`${label}: ${value.trim()}`);
+    });
+
+    if(parts.length) return parts.join("\n");
+
+    const ignored=new Set(["id","date","rating","mood","checks","check_items","tags","updatedAt","shower","laundry","headache","hospital","visit","medication","medicine","outing"]);
+    Object.entries(e).forEach(([k,v])=>{
+      if(ignored.has(k)||v==null||v==="")return;
+      if(Array.isArray(v)&&v.length)parts.push(`${k}: ${v.join("、")}`);
+      else if(typeof v==="string"||typeof v==="number")parts.push(`${k}: ${v}`);
+    });
+    return parts.join("\n").trim();
+  }
+
+  return arr.map(e=>{
+    const text=buildText(e||{});
+    return {
+      id:e?.id||(Date.now().toString(36)+Math.random().toString(36).slice(2)),
+      date:normalizeDate(e?.date||e?.day||e?.datetime),
+      rating:Math.min(5,Math.max(1,Number(e?.rating||e?.score||e?.stars)||3)),
+      mood:chooseMood(e?.mood||e?.feelings||e?.emotion),
+      text,
+      checks:collectChecks(e||{}),
+      updatedAt:Number(e?.updatedAt)||Date.now()
+    };
+  }).filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&e.text);
 }
 function addImported(entries){
   const current=loadEntries();const fingerprints=new Set(current.map(makeFingerprint));let added=0,skipped=0;

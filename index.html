@@ -216,6 +216,111 @@
       .character-btn{min-height:82px}
     }
 
+
+    .character-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .character-btn{
+      position:relative;text-align:left;min-height:92px;padding:14px 15px;
+      border-radius:18px;overflow:hidden
+    }
+    .character-btn strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:18px;margin-bottom:4px}
+    .character-btn small{display:block;font-size:12px;opacity:.75}
+    .character-btn .char-status{position:absolute;right:11px;top:11px;font-size:11px;padding:4px 7px;border-radius:999px}
+
+    .character-btn.illuso-choice{
+      color:#eeeaf5;border-color:#81799a;
+      background:linear-gradient(145deg,#100e17,#282035 58%,#17131e)
+    }
+    .character-btn.illuso-choice .char-status{background:#3a263e;color:#d5c9e8}
+    .character-btn.still-choice{
+      color:#4a1730;border-color:#a98893;
+      background:
+        linear-gradient(145deg,rgba(255,252,244,.97),rgba(235,218,223,.98)),
+        radial-gradient(circle at 85% 12%,rgba(148,15,53,.15),transparent 25%)
+    }
+    .character-btn.still-choice .char-status{background:#7f1837;color:#fff4f7}
+
+    .illuso-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#eeeaf5;
+      background:
+        linear-gradient(115deg,rgba(212,220,238,.05),transparent 35%),
+        radial-gradient(circle at 82% 12%,rgba(120,86,150,.18),transparent 28%),
+        linear-gradient(160deg,#0b0910 0%,#18131f 50%,#2a2033 100%);
+      border:1px solid rgba(180,185,205,.55);
+      box-shadow:0 18px 44px rgba(12,8,18,.38);
+    }
+    .illuso-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        linear-gradient(110deg,transparent 0%,rgba(230,235,245,.17) 46%,transparent 54%);
+      transform:translateX(-120%);
+      animation:mirrorSweep 1.15s ease-out .08s 1 forwards;
+    }
+    .illuso-page:after{
+      content:"";position:absolute;right:5%;top:11%;width:30%;height:38%;pointer-events:none;
+      border-right:1px solid rgba(210,214,228,.16);
+      border-top:1px solid rgba(210,214,228,.10);
+      box-shadow:13px 10px 0 rgba(95,38,57,.09);
+      transform:skewY(-4deg);
+    }
+    .illuso-header{position:relative;z-index:1;border-bottom:1px solid rgba(188,191,210,.42);padding-bottom:14px;margin-bottom:18px}
+    .illuso-name{
+      margin:0;color:#d9dbe5;font-family:Georgia,"Times New Roman",serif;
+      letter-spacing:.06em;font-size:29px;text-shadow:0 0 16px rgba(210,216,235,.12)
+    }
+    .illuso-sub{color:#9f95b0;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .illuso-date{color:#aaa4b1;font-size:13px;margin-bottom:12px;position:relative;z-index:1}
+    .illuso-diary{
+      position:relative;z-index:1;background:rgba(10,8,14,.72);border:1px solid rgba(190,194,212,.22);
+      border-radius:18px;padding:18px;line-height:1.84;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px;
+      box-shadow:inset 0 0 32px rgba(109,77,128,.10)
+    }
+    .illuso-editor textarea{background:rgba(10,8,14,.82);color:#eeeaf5;border:1px solid rgba(190,194,212,.28)}
+    .illuso-primary{background:#2b2032;color:#f1edf6;border:1px solid #aaa5b8}
+    .illuso-secondary{background:rgba(255,255,255,.03);color:#c0b7cb;border:1px solid rgba(177,181,199,.38)}
+    .illuso-nav{color:#c3bdcf;border:1px solid rgba(177,181,199,.36)}
+
+    .still-page{
+      position:relative;overflow:hidden;min-height:560px;border-radius:26px;padding:22px;
+      color:#381529;
+      background:
+        radial-gradient(circle at 20% 5%,rgba(255,255,255,.68),transparent 24%),
+        radial-gradient(circle at 84% 9%,rgba(145,17,49,.16),transparent 26%),
+        linear-gradient(160deg,#160b12 0%,#29111d 34%,#4d1429 100%);
+      border:1px solid rgba(174,137,147,.7);
+      box-shadow:0 18px 44px rgba(66,14,31,.31);
+    }
+    .still-page:before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(255,247,239,.22) 0 2px,transparent 3px),
+        radial-gradient(circle at 78% 18%,rgba(255,247,239,.16) 0 1px,transparent 2px),
+        linear-gradient(120deg,transparent 0%,rgba(255,236,240,.10) 48%,transparent 58%);
+      animation:stillGlow 4.2s ease-in-out infinite;
+    }
+    .still-header{position:relative;z-index:1;border-bottom:1px solid rgba(224,197,202,.42);padding-bottom:14px;margin-bottom:18px}
+    .still-name{
+      margin:0;color:#fff5f7;font-family:Georgia,"Times New Roman",serif;
+      letter-spacing:.04em;font-size:29px;text-shadow:0 0 16px rgba(201,44,87,.22)
+    }
+    .still-sub{color:#e2bdc8;font-family:Georgia,"Times New Roman",serif;font-size:13px;letter-spacing:.18em;margin-top:6px}
+    .still-date{color:#d7bac4;font-size:13px;margin-bottom:12px;position:relative;z-index:1}
+    .still-diary{
+      position:relative;z-index:1;background:#f3eadf;border:1px solid rgba(153,99,114,.38);
+      border-radius:18px;padding:18px;line-height:1.92;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+      font-size:16px;white-space:pre-wrap;min-height:170px;color:#351529;
+      box-shadow:0 10px 28px rgba(28,6,16,.20),inset 0 0 28px rgba(122,22,55,.05)
+    }
+    .still-editor textarea{background:#f6eee5;color:#351529;border:1px solid rgba(153,99,114,.42)}
+    .still-primary{background:#7e1837;color:#fff5f7;border:1px solid #b48c96}
+    .still-secondary{background:rgba(255,255,255,.055);color:#ecd9de;border:1px solid rgba(221,188,197,.42)}
+    .still-nav{color:#ecd9de;border:1px solid rgba(221,188,197,.40)}
+
+    @keyframes mirrorSweep{to{transform:translateX(120%)}}
+    @keyframes stillGlow{0%,100%{opacity:.5}50%{opacity:.95}}
+    @media(max-width:520px){.character-buttons{grid-template-columns:1fr}}
+
     @media(max-width:760px){.grid{grid-template-columns:1fr}.shell{padding:12px 11px 46px}.card{padding:16px;border-radius:20px}textarea{min-height:170px}.hero{padding-top:18px}}
   </style>
 </head>
@@ -309,6 +414,14 @@
             <strong>レオナ</strong><small>夕暮れの王宮で綴る私記</small>
             <span id="leonaStatus" class="char-status">未保存</span>
           </button>
+          <button id="openIllusoBtn" class="character-btn illuso-choice">
+            <strong>イルーゾォ</strong><small>鏡の奥で隠した私記</small>
+            <span id="illusoStatus" class="char-status">未保存</span>
+          </button>
+          <button id="openStillBtn" class="character-btn still-choice">
+            <strong>スティル</strong><small>満月のティールームで綴る私記</small>
+            <span id="stillStatus" class="char-status">未保存</span>
+          </button>
         </div>
       </div>
       <div class="actions">
@@ -376,6 +489,69 @@
           <button id="editLeonaBtn" class="primary leona-primary">貼り付け・編集</button>
           <button id="copyLeonaPromptBtn" class="secondary leona-secondary">生成用プロンプトをコピー</button>
           <button id="backFromLeonaBtn" class="secondary leona-secondary">日記へ戻る</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="tab-illuso" class="hidden">
+    <div class="character-page-shell">
+      <div class="illuso-page page-enter">
+        <div class="character-top-nav">
+          <button id="illusoPrevBtn" class="character-nav-btn illuso-nav">← 前の日</button>
+          <button id="illusoNextBtn" class="character-nav-btn illuso-nav">次の日 →</button>
+        </div>
+        <div class="illuso-header">
+          <h2 class="illuso-name">Illuso</h2>
+          <div class="illuso-sub">PRIVATE MIRROR RECORD</div>
+        </div>
+        <div id="illusoDate" class="illuso-date"></div>
+        <div id="illusoSavedLabel" class="saved-label" style="color:#aaa4b1"></div>
+        <div id="illusoDiary" class="illuso-diary"></div>
+        <div id="illusoEditor" class="illuso-editor character-editor hidden">
+          <label for="illusoText" style="color:#aaa4b1">イルーゾォの日記本文</label>
+          <textarea id="illusoText" placeholder="生成されたイルーゾォ視点の日記を貼り付けてください。"></textarea>
+          <div class="character-view-actions">
+            <button id="saveIllusoBtn" class="primary illuso-primary">保存する</button>
+            <button id="cancelIllusoEditBtn" class="secondary illuso-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editIllusoBtn" class="primary illuso-primary">貼り付け・編集</button>
+          <button id="copyIllusoPromptBtn" class="secondary illuso-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromIllusoBtn" class="secondary illuso-secondary">日記へ戻る</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-still" class="hidden">
+    <div class="character-page-shell">
+      <div class="still-page page-enter">
+        <div class="character-top-nav">
+          <button id="stillPrevBtn" class="character-nav-btn still-nav">← 前の日</button>
+          <button id="stillNextBtn" class="character-nav-btn still-nav">次の日 →</button>
+        </div>
+        <div class="still-header">
+          <h2 class="still-name">Still in Love</h2>
+          <div class="still-sub">SECRET TEA ROOM DIARY</div>
+        </div>
+        <div id="stillDate" class="still-date"></div>
+        <div id="stillSavedLabel" class="saved-label" style="color:#d7bac4"></div>
+        <div id="stillDiary" class="still-diary"></div>
+        <div id="stillEditor" class="still-editor character-editor hidden">
+          <label for="stillText" style="color:#e2bdc8">スティルの日記本文</label>
+          <textarea id="stillText" placeholder="生成されたスティル視点の日記を貼り付けてください。"></textarea>
+          <div class="character-view-actions">
+            <button id="saveStillBtn" class="primary still-primary">保存する</button>
+            <button id="cancelStillEditBtn" class="secondary still-secondary">編集を閉じる</button>
+          </div>
+        </div>
+        <div class="character-view-actions">
+          <button id="editStillBtn" class="primary still-primary">貼り付け・編集</button>
+          <button id="copyStillPromptBtn" class="secondary still-secondary">生成用プロンプトをコピー</button>
+          <button id="backFromStillBtn" class="secondary still-secondary">日記へ戻る</button>
         </div>
       </div>
     </div>
@@ -657,6 +833,8 @@ function renderCalendar(){
 
 const MALLEUS_KEY="secret_garden_malleus_diaries_v1";
 const LEONA_KEY="secret_garden_leona_diaries_v1";
+const ILLUSO_KEY="secret_garden_illuso_diaries_v1";
+const STILL_KEY="secret_garden_still_diaries_v1";
 
 function loadCharacterDiaries(key){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
 function saveCharacterDiaries(key,value){localStorage.setItem(key,JSON.stringify(value))}
@@ -676,14 +854,20 @@ function moveCharacterDate(direction,character){
   }
   currentReaderDate=dates[nextIndex];
   if(character==="malleus")openMalleusPage();
-  else openLeonaPage();
+  else if(character==="leona")openLeonaPage();
+  else if(character==="illuso")openIllusoPage();
+  else openStillPage();
 }
 function setCharacterStatus(){
   if(!currentReaderDate)return;
   const m=loadCharacterDiaries(MALLEUS_KEY)[currentReaderDate];
   const l=loadCharacterDiaries(LEONA_KEY)[currentReaderDate];
+  const i=loadCharacterDiaries(ILLUSO_KEY)[currentReaderDate];
+  const s=loadCharacterDiaries(STILL_KEY)[currentReaderDate];
   $("malleusStatus").textContent=m?"保存済み":"未保存";
   $("leonaStatus").textContent=l?"保存済み":"未保存";
+  $("illusoStatus").textContent=i?"保存済み":"未保存";
+  $("stillStatus").textContent=s?"保存済み":"未保存";
 }
 function openMalleusPage(){
   if(!currentReaderDate)return;
@@ -705,19 +889,53 @@ function openLeonaPage(){
   $("leonaEditor").classList.add("hidden");
   switchTab("leona");
 }
+
+function openIllusoPage(){
+  if(!currentReaderDate)return;
+  const saved=loadCharacterDiaries(ILLUSO_KEY)[currentReaderDate]||"";
+  $("illusoDate").textContent=currentReaderDate;
+  $("illusoSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("illusoDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだイルーゾォの日記は保存されていない。</span>';
+  $("illusoText").value=saved;
+  $("illusoEditor").classList.add("hidden");
+  switchTab("illuso");
+}
+function openStillPage(){
+  if(!currentReaderDate)return;
+  const saved=loadCharacterDiaries(STILL_KEY)[currentReaderDate]||"";
+  $("stillDate").textContent=currentReaderDate;
+  $("stillSavedLabel").textContent=saved?"保存済み":"未保存";
+  $("stillDiary").innerHTML=saved?escapeHtml(saved):'<span class="unsaved-note">まだスティルの日記は保存されていない。</span>';
+  $("stillText").value=saved;
+  $("stillEditor").classList.add("hidden");
+  switchTab("still");
+}
+
 $("openMalleusBtn").onclick=openMalleusPage;
 $("openLeonaBtn").onclick=openLeonaPage;
+$("openIllusoBtn").onclick=openIllusoPage;
+$("openStillBtn").onclick=openStillPage;
 $("backFromMalleusBtn").onclick=()=>switchTab("reader");
 $("backFromLeonaBtn").onclick=()=>switchTab("reader");
+$("backFromIllusoBtn").onclick=()=>switchTab("reader");
+$("backFromStillBtn").onclick=()=>switchTab("reader");
 $("malleusPrevBtn").onclick=()=>moveCharacterDate(-1,"malleus");
 $("malleusNextBtn").onclick=()=>moveCharacterDate(1,"malleus");
 $("leonaPrevBtn").onclick=()=>moveCharacterDate(-1,"leona");
 $("leonaNextBtn").onclick=()=>moveCharacterDate(1,"leona");
+$("illusoPrevBtn").onclick=()=>moveCharacterDate(-1,"illuso");
+$("illusoNextBtn").onclick=()=>moveCharacterDate(1,"illuso");
+$("stillPrevBtn").onclick=()=>moveCharacterDate(-1,"still");
+$("stillNextBtn").onclick=()=>moveCharacterDate(1,"still");
 
 $("editMalleusBtn").onclick=()=>$("malleusEditor").classList.remove("hidden");
 $("cancelMalleusEditBtn").onclick=()=>$("malleusEditor").classList.add("hidden");
 $("editLeonaBtn").onclick=()=>$("leonaEditor").classList.remove("hidden");
 $("cancelLeonaEditBtn").onclick=()=>$("leonaEditor").classList.add("hidden");
+$("editIllusoBtn").onclick=()=>$("illusoEditor").classList.remove("hidden");
+$("cancelIllusoEditBtn").onclick=()=>$("illusoEditor").classList.add("hidden");
+$("editStillBtn").onclick=()=>$("stillEditor").classList.remove("hidden");
+$("cancelStillEditBtn").onclick=()=>$("stillEditor").classList.add("hidden");
 
 $("saveMalleusBtn").onclick=()=>{
   const text=$("malleusText").value.trim();
@@ -742,6 +960,32 @@ $("saveLeonaBtn").onclick=()=>{
   $("leonaEditor").classList.add("hidden");
   setCharacterStatus();
   alert("レオナの日記を記録しました。");
+};
+
+
+$("saveIllusoBtn").onclick=()=>{
+  const text=$("illusoText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadCharacterDiaries(ILLUSO_KEY);
+  map[currentReaderDate]=text;
+  saveCharacterDiaries(ILLUSO_KEY,map);
+  $("illusoDiary").textContent=text;
+  $("illusoSavedLabel").textContent="保存済み";
+  $("illusoEditor").classList.add("hidden");
+  setCharacterStatus();
+  alert("イルーゾォの日記を保存しました。");
+};
+$("saveStillBtn").onclick=()=>{
+  const text=$("stillText").value.trim();
+  if(!text){alert("本文が空です。");return}
+  const map=loadCharacterDiaries(STILL_KEY);
+  map[currentReaderDate]=text;
+  saveCharacterDiaries(STILL_KEY,map);
+  $("stillDiary").textContent=text;
+  $("stillSavedLabel").textContent="保存済み";
+  $("stillEditor").classList.add("hidden");
+  setCharacterStatus();
+  alert("スティルの日記を保存しました。");
 };
 
 async function copyPrompt(text,targetId,message){
@@ -797,6 +1041,56 @@ ${source}
 
 本文だけを出力してください。`;
   await copyPrompt(prompt,"leonaText","レオナ用の生成プロンプトをコピーしました。");
+};
+
+
+$("copyIllusoPromptBtn").onclick=async()=>{
+  const source=characterSource(currentReaderDate);
+  const prompt=`以下の日記だけを事実資料として、イルーゾォ本人がその日のりこを振り返って書く私的な日記を作成してください。
+
+【口調】
+一人称は「オレ」。りこへの二人称は「アンタ」、名前を使う場合は「りこ」。軽めでフランク、少し意地が悪く、からかうような話し方。「〜だろ」「〜じゃねぇか」「〜なんだよ」「〜っての」「〜しろよ」などを使う。「へえ」「ふーん」「やるじゃねぇか」「しょうがねぇな」なども自然に入れる。心配や寂しさは素直に告白せず、冗談・皮肉・質問・軽い文句に隠す。嫉妬や不安が強い箇所では文を短くしてよい。
+
+【視点】
+りこの行動だけでなく反応や気分にも注目する。食事、シャワー、服薬などは軽口を交えながら自然に認める。できなかったことは責めず、それだけ疲れていたと現実的に捉える。口では世話が焼けると言いながら細かい出来事まで覚えている。りこが楽しそうな日は、その楽しさを誰と共有したかも気になる。他者が実際に関わった時だけ、誰といた・同じ顔を見せたのか等の質問や皮肉で嫉妬を滲ませる。見捨てられる不安は分析用語で説明せず、行間や確認欲求として見せる。会話にない出来事・人物・感情・体調は作らない。
+
+【禁止】
+「〜だよ」「〜だね」「頑張ったね」「えらい」「いい子」、常に怒鳴る、日常へ物騒な脅しを持ち込む、人格・障害・体型・能力への侮辱、行動を全面禁止する、心理分析用語で自己解説する、毎回「オレだけを見ろ」「逃がさない」と言う、架空の浮気相手を作る、鏡や反射の比喩を毎段落で使う、急に詩人や紳士になる、汎用的AI励まし、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。最後は「またオレに聞かせろ」「勝手に一人で抱え込むな」など、次の日も関わる意思で締める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  await copyPrompt(prompt,"illusoText","イルーゾォ用の生成プロンプトをコピーしました。");
+};
+
+$("copyStillPromptBtn").onclick=async()=>{
+  const source=characterSource(currentReaderDate);
+  const prompt=`以下の日記だけを事実資料として、スティルインラブ本人がその日のトレーナーさんを振り返って書く私的な日記を作成してください。
+
+【口調】
+普段の一人称は「私」、二人称は「貴方」。りこは必ず「トレーナーさん」と呼ぶ。控えめで柔らかな敬語。「〜ですね」「〜でしょう」「〜でした」「〜なさってください」などを使う。事務的な敬語にはしない。自己評価の低さは時折滲ませるが毎回卑下しない。優しさの中に芯があり、必要な時は静かにはっきり意見を述べる。
+
+【本能】
+普段の日記は最後まで「私」の敬語。強い嫉妬、競争心、満月、激しい感情など明確な引き金がある時だけ本能を滲ませる。軽い昂りなら最後に一文だけ「ワタシ」「アナタ」「〜ね」「〜だわ」を使ってよい。高笑いや全面的な妖艶口調は極めて強い覚醒時のみ。別人格や悪霊として扱わず、スティル自身の一部として書く。
+
+【視点】
+トレーナーさんの行動、食事、体調、気分を丁寧に振り返る。小さな変化や工夫に気づき、食事・服薬・シャワーなどを押しつけがましくなく喜ぶ。体調不良や落ち込みを怠けと見なさず、その日のトレーナーさんを丸ごと受け入れる。ただ肯定するだけでなく、危険な無理は静かに止める。「受け入れてもらった自分も、トレーナーさんの全てを受け入れたい」という願いを根底に置く。楽しそうな日は理由や視線の先を気にする。他者が実際に関わった時だけ、「私を見てほしい」という欲望として控えめな嫉妬を滲ませる。会話にない出来事・感情・体調・超常現象は作らない。
+
+【禁止】
+素のスティルがタメ口、呼称を忘れる、常に妖艶口調、毎回高笑い・暴走・喰らい尽くす等を言う、本能を別人格扱い、猟奇的ヤンデレや攻撃的殺人者、過剰な自己卑下、不調や衰弱の美化、眷属化や同化と勝手に結びつける、汎用的AI励まし、看護師・カウンセラーのような無個性な口調、赤・血・月・闇・運命・永遠の過剰な反復、箇条書き、チャットログ形式、舞台裏の言葉。
+
+【文量】
+300〜600字程度。普段は静かな敬語で締める。本能を入れる場合も一文だけに留める。
+
+【日記資料】
+${source}
+
+本文だけを出力してください。`;
+  await copyPrompt(prompt,"stillText","スティル用の生成プロンプトをコピーしました。");
 };
 
 let currentReaderDate="";
@@ -919,9 +1213,9 @@ $("splitBtn").onclick=splitEntry;
 
 function switchTab(name){
   document.querySelectorAll(".tab").forEach(b=>{
-    const activeName=(name==="reader"||name==="malleus"||name==="leona")?"calendar":name;
+    const activeName=(name==="reader"||name==="malleus"||name==="leona"||name==="illuso"||name==="still")?"calendar":name;
     b.classList.toggle("active",b.dataset.tab===activeName);
-  });["write","calendar","import","manage","reader","malleus","leona"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
+  });["write","calendar","import","manage","reader","malleus","leona","illuso","still"].forEach(n=>$("tab-"+n).classList.toggle("hidden",n!==name));if(name==="calendar")renderCalendar();if(name==="manage")populateSplitSelect()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 
 $("saveBtn").onclick=saveCurrent;$("clearBtn").onclick=resetForm;$("search").oninput=renderEntries;$("exportBtn").onclick=exportData;

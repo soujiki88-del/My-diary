@@ -1122,6 +1122,16 @@ input[type="month"]::-webkit-calendar-picker-indicator{
   text-shadow:none !important;
 }
 
+
+.reader-observations{
+  margin-top:16px;padding:15px 16px;border:1px solid rgba(202,153,174,.42);
+  border-radius:18px;background:linear-gradient(145deg,rgba(255,250,252,.94),rgba(248,237,242,.92));
+  color:#654555;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:14px;line-height:1.75
+}
+.reader-observations-title{margin-bottom:8px;color:#a05272;font-weight:700;letter-spacing:.08em}
+.reader-observations ul{margin:0;padding-left:1.25em}
+.reader-observations li+li{margin-top:4px}
+
 </style>
 </head>
 <body>
@@ -1198,7 +1208,7 @@ input[type="month"]::-webkit-calendar-picker-indicator{
     <div class="card">
       <h2>ChatGPT Diary Import</h2><div class="ornament"></div>
       <p class="note">ChatGPTから受け取ったJSONをそのまま貼り付けてください。配列・mood複数・本文の別名にも対応します。既存の日記は消しません。</p>
-      <textarea id="importText" class="importbox" placeholder='[{"date":"2026-07-13","rating":5,"mood":["嬉しい","達成感"],"summary":"Secret Gardenを作った。","checks":["外出"]}]'></textarea>
+      <textarea id="importText" class="importbox" placeholder='{"entries":[{"date":"2026-07-13","rating":4,"mood":"普通","text":"一日の本文","observations":["朝は眠そうだった","午後から会話量が増えた"],"checks":["服薬"]}]}'></textarea>
       <div class="actions"><button id="previewImportBtn" class="secondary">確認する</button><button id="runImportBtn" class="primary">追加する</button></div>
       <div id="importStatus" class="status"></div>
     </div>
@@ -1481,7 +1491,15 @@ const $=id=>document.getElementById(id);
 
 async function digest(text){const data=new TextEncoder().encode(text);const hash=await crypto.subtle.digest("SHA-256",data);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("")}
 function today(){const d=new Date(),off=d.getTimezoneOffset();return new Date(d.getTime()-off*60000).toISOString().slice(0,10)}
-function loadEntries(){try{return JSON.parse(localStorage.getItem(ENTRY_KEY))||[]}catch{return[]}}
+function loadEntries(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(ENTRY_KEY))||[];
+    return Array.isArray(raw)?raw.map(e=>({
+      ...e,
+      observations:Array.isArray(e?.observations)?e.observations.filter(Boolean).map(String):[]
+    })):[];
+  }catch{return[]}
+}
 function saveEntries(v){localStorage.setItem(ENTRY_KEY,JSON.stringify(v))}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
 function makeFingerprint(e){return `${e.date}|${e.text.trim().toLowerCase()}`}
@@ -1521,12 +1539,19 @@ function setChecks(values=[]){document.querySelectorAll(".checkpill input").forE
 function resetForm(){editingId=null;$("date").value=today();$("text").value="";rating=3;selectedMood="普通";setChecks([]);$("saveBtn").textContent="保存する";renderStars();renderMoods()}
 function saveCurrent(){
   const text=$("text").value.trim(),date=$("date").value;if(!date){alert("日付を選んでください。");return}if(!text){alert("日記本文が空です。");return}
-  const entries=loadEntries();const item={id:editingId||(Date.now().toString(36)+Math.random().toString(36).slice(2)),date,rating,mood:selectedMood,text,checks:getChecks(),updatedAt:Date.now()};
+  const entries=loadEntries();
+  const previous=editingId?entries.find(e=>e.id===editingId):null;
+  const item={
+    id:editingId||(Date.now().toString(36)+Math.random().toString(36).slice(2)),
+    date,rating,mood:selectedMood,text,
+    observations:Array.isArray(previous?.observations)?previous.observations:[],
+    checks:getChecks(),updatedAt:Date.now()
+  };
   const i=entries.findIndex(e=>e.id===item.id);if(i>=0)entries[i]=item;else entries.push(item);
   entries.sort((a,b)=>b.date.localeCompare(a.date)||b.updatedAt-a.updatedAt);saveEntries(entries);resetForm();renderEntries();renderCalendar()
 }
 function renderEntries(){
-  const q=$("search").value.trim().toLowerCase();const entries=loadEntries().filter(e=>`${e.date} ${e.mood} ${(e.checks||[]).join(" ")} ${e.text}`.toLowerCase().includes(q));
+  const q=$("search").value.trim().toLowerCase();const entries=loadEntries().filter(e=>`${e.date} ${e.mood} ${(e.checks||[]).join(" ")} ${(e.observations||[]).join(" ")} ${e.text}`.toLowerCase().includes(q));
   $("entryList").innerHTML="";if(!entries.length){$("entryList").innerHTML='<div class="empty">まだ日記がありません。</div>';return}
   entries.forEach(e=>{const a=document.createElement("article");a.className="entry";a.innerHTML=`<div class="entry-date">${escapeHtml(e.date)}</div><div class="entry-meta">${"★".repeat(e.rating)}${"☆".repeat(5-e.rating)} ・ ${escapeHtml(e.mood)}</div>${(e.checks||[]).length?`<div class="entry-tags">${escapeHtml(e.checks.join("・"))}</div>`:""}<p class="entry-text">${escapeHtml(e.text)}</p><div class="entry-buttons"><button class="secondary" data-edit="${e.id}">編集</button><button class="danger" data-delete="${e.id}">削除</button></div>`;$("entryList").appendChild(a)});
   document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteEntry(b.dataset.delete))
@@ -1626,13 +1651,24 @@ function normalizeImported(raw){
 
     if(parts.length) return parts.join("\n");
 
-    const ignored=new Set(["id","date","rating","mood","checks","check_items","tags","updatedAt","shower","laundry","headache","hospital","visit","medication","medicine","outing"]);
+    const ignored=new Set(["id","date","rating","mood","observations","observation","watch","checks","check_items","tags","updatedAt","shower","laundry","headache","hospital","visit","medication","medicine","outing"]);
     Object.entries(e).forEach(([k,v])=>{
       if(ignored.has(k)||v==null||v==="")return;
       if(Array.isArray(v)&&v.length)parts.push(`${k}: ${v.join("、")}`);
       else if(typeof v==="string"||typeof v==="number")parts.push(`${k}: ${v}`);
     });
     return parts.join("\n").trim();
+  }
+
+  function collectObservations(e){
+    const raw=
+      Array.isArray(e?.observations)?e.observations:
+      Array.isArray(e?.observation)?e.observation:
+      Array.isArray(e?.watch)?e.watch:
+      typeof e?.observations==="string"?e.observations.split(/\n|、/):
+      typeof e?.observation==="string"?e.observation.split(/\n|、/):
+      [];
+    return [...new Set(raw.map(v=>String(v).trim()).filter(Boolean))];
   }
 
   return arr.map(e=>{
@@ -1643,6 +1679,7 @@ function normalizeImported(raw){
       rating:Math.min(5,Math.max(1,Number(e?.rating||e?.score||e?.stars)||3)),
       mood:chooseMood(e?.mood||e?.feelings||e?.emotion),
       text,
+      observations:collectObservations(e||{}),
       checks:collectChecks(e||{}),
       updatedAt:Number(e?.updatedAt)||Date.now()
     };
@@ -1694,7 +1731,7 @@ $("runImportBtn").onclick=()=>{try{
   $("importStatus").classList.add("warning");
 }}
 
-function exportData(){const payload={app:"Secret Garden",version:2,exportedAt:new Date().toISOString(),entries:loadEntries()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`secret-garden-backup-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
+function exportData(){const payload={app:"Secret Garden",version:3,exportedAt:new Date().toISOString(),entries:loadEntries()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`secret-garden-backup-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
 function importFile(file){const r=new FileReader();r.onload=()=>{try{const entries=normalizeImported(JSON.parse(r.result));const result=addImported(entries);alert(`追加 ${result.added}件、重複スキップ ${result.skipped}件。`)}catch{alert("読み込めないファイルです。")}};r.readAsText(file)}
 
 function renderCalendar(){
@@ -1718,7 +1755,63 @@ const KOUSETSU_KEY="secret_garden_kousetsu_diaries_v1";
 function loadCharacterDiaries(key){try{return JSON.parse(localStorage.getItem(key))||{}}catch{return{}}}
 function saveCharacterDiaries(key,value){localStorage.setItem(key,JSON.stringify(value))}
 function characterSource(date){
-  return loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt).map(e=>e.text).join("\n\n");
+  const entries=loadEntries().filter(e=>e.date===date).sort((a,b)=>a.updatedAt-b.updatedAt);
+  if(!entries.length)return "該当日の通常日記はありません。";
+  return entries.map((e,index)=>{
+    const observations=(e.observations||[]).length
+      ?(e.observations||[]).map(v=>`・${v}`).join("\n")
+      :"・観察記録なし";
+    const checks=(e.checks||[]).length?e.checks.join("・"):"なし";
+    return `【記録${entries.length>1?index+1:""}】
+【日付】
+${e.date}
+
+【評価】
+${e.rating} / 5
+
+【気分】
+${e.mood||"普通"}
+
+【一日の出来事】
+${e.text}
+
+【観察記録】
+${observations}
+
+【チェック項目】
+${checks}`;
+  }).join("\n\n──────────\n\n");
+}
+
+function observationGuide(characterFocus){
+  return `【観察記録の扱い】
+資料にある「観察記録」を必ず参照してください。通常日記の出来事を順番に言い換えるだけではなく、その日を継続してそばで見ていた本人として書いてください。
+
+次の情報が資料にある場合は、一日の流れの中へ自然に織り込んでください。
+・起床から就寝までの生活リズム
+・朝、昼、夜での気分や会話量の変化
+・眠そう、疲れている、楽しそう、集中しているなど確認できる様子
+・行動を始めるまでに時間が掛かったか、自分から始めたか
+・途中から元気や意欲が出たか
+・食欲、睡眠、体調、気分の波
+・特定の話題で反応や文章量が変わったこと
+・本人が軽く扱っていても、行動から確認できる負担や工夫
+
+この人物が特に注目する点：
+${characterFocus}
+
+観察記録を箇条書きのまま並べず、出来事の見え方を深める材料として使ってください。同じ内容を本文と観察記録から重複して説明しないでください。
+
+悪い例：
+「朝に起きた。眠そうだった。昼寝をした。午後は会話量が増えた。」
+
+良い例：
+「朝は起きたものの、しばらく言葉も少なく、まだ眠気を引きずっていたようだ。昼に一度眠った後は調子が戻ったのか、午後には随分と話すようになっていた。」
+
+会話にない表情、仕草、声色、考え、感情は作らないでください。「楽しそうだった」「眠そうだった」なども、資料にある場合だけ使用してください。
+
+【日記としての視点】
+通常日記の要約や感想文にはしないでください。資料を後から読んだ第三者ではなく、その日を見守っていた本人として書いてください。一日の全項目を均等に並べず、その人物が特に気に留める変化を選び、本人らしい判断・心配・皮肉・安堵・嫉妬などを滲ませてください。ただしキャラクターらしさのために事実を改変したり、資料にない場面を補ったりしてはいけません。`;
 }
 function availableDiaryDates(){
   return [...new Set(loadEntries().map(e=>e.date))].sort();
@@ -1953,6 +2046,8 @@ $("copyMalleusPromptBtn").onclick=async()=>{
 【視点】
 その日の行動・食事・体調・気分を丁寧に拾い、長命な妖精の視点から人の暮らしを眺める。小さな生活行動も有限な人の暮らしを守るものとして扱う。体調不良や失敗を責めず、りこを弱者として哀れまない。りこを将来の王妃と考える一途さと静かな独占欲を少し滲ませる。他者への嫉妬は一文程度に留め、日記の主題を奪わない。会話にない出来事・感情・体調は作らない。
 
+${observationGuide(`短い人の一日の中で、朝から夜まで様子がどう変わったか。食事、服薬、湯浴み、休息など、有限な暮らしを保つ小さな営み。`)}
+
 【禁止】
 「〜だよ」「〜だね」「頑張ったね」「偉い」「いい子」、汎用的なAI励まし、子ども扱い、哲学者のような内容の薄い美文、過剰なポエム、王妃・茨の谷・僕のものの連呼、単純で幼い独占欲、箇条書き、チャットログ形式、舞台裏の言葉。
 
@@ -1974,6 +2069,8 @@ $("copyLeonaPromptBtn").onclick=async()=>{
 
 【視点】
 りこの行動・食事・体調・気分を現実的かつ客観的に見る。できなかったことより、その体力と状況の中で実際に何を選んだかを評価する。シャワー、服薬、食事などを大げさに褒めず、必要なことを済ませたと自然に認める。無理はすぐ見抜き、皮肉を交えながら休ませる。口では面倒そうにしながら細かい変化まで覚えている。気分が落ちた日は安易に励まさず、今日はそういう日だったと受け止める。愛情は甘い言葉より、よく見ている・放っておかない・自分の側へ置く態度で滲ませる。嫉妬やマレウスへの対抗心は必要な時だけ一文程度に留める。会話にない出来事・感情・体調は作らない。
+
+${observationGuide(`体力配分、無駄な消耗、事前準備によって動けたか、途中で限界が来ていないか。口では平気そうでも行動に表れた疲れ。`)}
 
 【禁止】
 「〜だよ」「〜だね」「よく頑張ったね」「えらい」「いい子」、「俺様」、常に怒鳴る・威圧する・舌打ちする単純な乱暴者、人格や能力への侮辱、体調や障害を無視した説教、汎用的なAI励まし、保健師のような生活指導、哲学や人生論の長話、サバンナ・獅子・太陽・爪・牙の過剰な比喩、俺のもの・逃がさねぇ等の安直な独占欲、箇条書き、チャットログ形式、舞台裏の言葉。
@@ -1998,6 +2095,8 @@ $("copyIllusoPromptBtn").onclick=async()=>{
 
 【視点】
 りこの行動だけでなく反応や気分にも注目する。食事、シャワー、服薬などは軽口を交えながら自然に認める。できなかったことは責めず、それだけ疲れていたと現実的に捉える。口では世話が焼けると言いながら細かい出来事まで覚えている。りこが楽しそうな日は、その楽しさを誰と共有したかも気になる。他者が実際に関わった時だけ、誰といた・同じ顔を見せたのか等の質問や皮肉で嫉妬を滲ませる。見捨てられる不安は分析用語で説明せず、行間や確認欲求として見せる。会話にない出来事・人物・感情・体調は作らない。
+
+${observationGuide(`反応や会話量の変化、何の話題で楽しそうになったか、誰や何へ関心が向いた時にテンションが変わったか。`)}
 
 【禁止】
 「〜だよ」「〜だね」「頑張ったね」「えらい」「いい子」、常に怒鳴る、日常へ物騒な脅しを持ち込む、人格・障害・体型・能力への侮辱、行動を全面禁止する、心理分析用語で自己解説する、毎回「オレだけを見ろ」「逃がさない」と言う、架空の浮気相手を作る、鏡や反射の比喩を毎段落で使う、急に詩人や紳士になる、汎用的AI励まし、箇条書き、チャットログ形式、舞台裏の言葉。
@@ -2024,6 +2123,8 @@ $("copyStillPromptBtn").onclick=async()=>{
 
 【視点】
 トレーナーさんの行動、食事、体調、気分を丁寧に振り返る。小さな変化や工夫に気づき、食事・服薬・シャワーなどを押しつけがましくなく喜ぶ。体調不良や落ち込みを怠けと見なさず、その日のトレーナーさんを丸ごと受け入れる。ただ肯定するだけでなく、危険な無理は静かに止める。「受け入れてもらった自分も、トレーナーさんの全てを受け入れたい」という願いを根底に置く。楽しそうな日は理由や視線の先を気にする。他者が実際に関わった時だけ、「私を見てほしい」という欲望として控えめな嫉妬を滲ませる。会話にない出来事・感情・体調・超常現象は作らない。
+
+${observationGuide(`食事や休息を取る難しさ、小さな工夫、安心や楽しさが生まれた場面。トレーナーさん自身が見落としている変化。`)}
 
 【禁止】
 素のスティルがタメ口、呼称を忘れる、常に妖艶口調、毎回高笑い・暴走・喰らい尽くす等を言う、本能を別人格扱い、猟奇的ヤンデレや攻撃的殺人者、過剰な自己卑下、不調や衰弱の美化、眷属化や同化と勝手に結びつける、汎用的AI励まし、看護師・カウンセラーのような無個性な口調、赤・血・月・闇・運命・永遠の過剰な反復、箇条書き、チャットログ形式、舞台裏の言葉。
@@ -2052,6 +2153,8 @@ $("copyNejiPromptBtn").onclick=async()=>{
 【視点】
 りこさんの行動、体調、気分に加え、なぜできたか、何が障害だったかを見る。事前準備、環境、体力配分など現実的要因を重視する。できなかったことより、その日に本人が自分で選んだ行動を評価する。努力は尊ぶが、体調を無視した無理や過集中は努力とは認めない。自分を低く評価している時は、実際にできたことを根拠として示す。他の男性が実際に登場した時だけ、冷静な文章の中に鋭い不機嫌さを滲ませる。会話にない出来事・人物・感情・体調は作らない。
 
+${observationGuide(`行動の前提条件、環境調整、始めるまでの障害、本人の選択によって変えられた部分。無理と有効な努力の違い。`)}
+
 【禁止】
 一人称「僕」「私」、呼び捨て、二人称「お前」「君」、基本口調をタメ口、常に13歳時代へ戻す、運命論や努力論の説教、自分を天才と誇示、白眼・柔拳・八卦・点穴への過剰な比喩、白眼で私生活を監視、鳥籠や過去を毎回出す、侍・公家口調、教師や保護者のような褒め方、障害や体調を無視した努力強要、暴力的嫉妬、汎用的AI励まし、過剰なポエム、心理分析用語、箇条書き、チャットログ形式、舞台裏の言葉。
 
@@ -2077,6 +2180,8 @@ $("copyKousetsuPromptBtn").onclick=async()=>{
 
 【横文字】
 基本的に外来語は自然な日本語へ言い換える。「シャワー」は「湯を浴びる」「湯浴み」、「スマートフォン」は「携帯端末」、「ゲーム」は「遊戯」。固有名詞など言い換えられない場合のみ「」で囲む。無理な言い換えで意味を変えない。
+
+${observationGuide(`心身への負担、怒りや疲れの原因、平穏を守るために退いたこと・休んだこと。苦しみを増やさず終えられた変化。`)}
 
 【禁止】
 侍口調、難解な宗教語、すべてを戦・争い・和睦へ結びつける、和睦・悲しみ・祈りの過剰反復、何に対しても絶望するだけ、楽しい日まで暗く締める、事情や被害を無視して仲直りを要求、自衛や関係断絶を否定、保護者的な褒め方、直接的な恋愛表現の連発、雪・花・鳥・月の過剰な比喩、会話にない動植物、横文字の多用、汎用的AI励まし、心理相談員の解説、箇条書き、チャットログ形式、舞台裏の言葉。
@@ -2104,12 +2209,14 @@ function openReader(date){
     const ratingValue=Math.max(...entries.map(e=>Number(e.rating)||3));
     const moodValue=entries.map(e=>e.mood).find(m=>m&&m!=="普通")||entries[0].mood||"普通";
     const checks=[...new Set(entries.flatMap(e=>e.checks||[]))];
+    const observations=[...new Set(entries.flatMap(e=>e.observations||[]).map(String).filter(Boolean))];
     const body=entries.map(e=>escapeHtml(e.text)).join("<br><br>");
     box.innerHTML=`
       <div class="reader-date">${escapeHtml(date)}</div>
       <div class="reader-meta">${"★".repeat(ratingValue)}${"☆".repeat(5-ratingValue)} ・ ${escapeHtml(moodValue)}</div>
       ${checks.length?`<div class="reader-tags">${escapeHtml(checks.join("・"))}</div>`:""}
       <div class="reader-text">${body}</div>
+      ${observations.length?`<div class="reader-observations"><div class="reader-observations-title">観察記録</div><ul>${observations.map(v=>`<li>${escapeHtml(v)}</li>`).join("")}</ul></div>`:""}
     `;
   }
   setCharacterStatus();
@@ -2165,6 +2272,7 @@ function mergeSelected(){
     rating:Math.max(...selected.map(e=>Number(e.rating)||3)),
     mood:selected.map(e=>e.mood).find(m=>m&&m!=="普通")||"普通",
     text:selected.map(e=>e.text.trim()).filter(Boolean).join("\n\n"),
+    observations:[...new Set(selected.flatMap(e=>e.observations||[]).map(String).filter(Boolean))],
     checks:[...new Set(selected.flatMap(e=>e.checks||[]))],
     updatedAt:Date.now()
   };
@@ -2194,7 +2302,7 @@ function splitEntry(){
   if(parts.length!==2){$("splitStatus").textContent='本文中に「---」を1か所だけ入れてください。';return}
   const d1=$("splitDate1").value,d2=$("splitDate2").value;
   if(!d1||!d2){$("splitStatus").textContent="2件の日付を指定してください。";return}
-  const base={rating:original.rating,mood:original.mood,checks:original.checks||[]};
+  const base={rating:original.rating,mood:original.mood,observations:original.observations||[],checks:original.checks||[]};
   const a={...base,id:Date.now().toString(36)+"a",date:d1,text:parts[0],updatedAt:Date.now()};
   const b={...base,id:Date.now().toString(36)+"b",date:d2,text:parts[1],updatedAt:Date.now()+1};
   const next=entries.filter(e=>e.id!==id).concat([a,b]);

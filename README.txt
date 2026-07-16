@@ -1,34 +1,19 @@
-Secret Garden v7 — 6 Characters
+Secret Garden v9 — Observation Update
 
-実装キャラクター
-- マレウス
-- レオナ
-- イルーゾォ
-- スティル
-- ネジ
-- 江雪
+ZIPを解凍し、以下をGitHubリポジトリのルートへ上書きアップロードしてください。
+index.html
+sw.js
+manifest.webmanifest
+icon-192.png
+icon-512.png
 
-追加内容
-- ネジ専用UI、保存、生成プロンプト
-- 江雪専用UI、保存、生成プロンプト
-- 6人分の保存済み／未保存表示
-- キャラ別・日付別保存
-- 完成版だけ表示、編集時のみ入力欄
-- 前日・翌日移動
-- 既存の日記、パスコード、4人分のキャラ日記を引き継ぎ
+README.txtはアップロード不要です。
 
-テーマ
-- ネジ：夜明け前の日向邸、生成り和紙、焦げ茶、灰紫
-- 江雪：雪残る本丸、濃紺、薄灰白、水色、藤紫
-
-更新方法
-1. ZIPを解凍
-2. SafariでGitHubの My-diary を開く
-3. Add file → Upload files
-4. index.html / manifest.webmanifest / sw.js / icon-192.png / icon-512.png をアップロード
-5. Commit changes
-6. 2〜5分待つ
-7. Safariで公開URLを再読み込み
-8. ホーム画面版Secret Gardenを完全終了して開き直す
-
-README.txt はアップロード不要です。
+更新内容
+・Secret Garden v3 JSONのobservationsを保存
+・古い日記との互換性を維持
+・観察記録を閲覧画面へ表示
+・検索、バックアップ、結合、手動編集で観察記録を保持
+・6人全員の生成資料に日付、評価、気分、本文、観察記録、チェック項目を収録
+・6人全員のプロンプトを「一日見守っていた視点」へ強化
+・Service Workerキャッシュ更新
